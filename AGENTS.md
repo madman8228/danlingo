@@ -228,3 +228,66 @@ src/
 - All exercise types have corresponding validators
 - Avatar system supports multiple age groups and expressions
 - Progress tracking includes XP, hearts, streaks, and achievements
+
+
+## Achievement System Guidelines
+
+### Overview
+The Achievement and Motivation System provides engagement features including XP, badges, milestones, streaks, and progress tracking.
+
+### Core Services
+- `achievementEngine.ts` - Central service for processing learning activities
+- `streakManager.ts` - Daily streak tracking
+- `badgeManager.ts` - Badge unlocking and progress
+- `progressTracker.ts` - Historical progress tracking
+- `goalTracker.ts` - Personal learning goals
+
+### Integration Pattern
+All learning modules should report activities using `achievementIntegration.ts`:
+
+```typescript
+import { recordLearningActivity } from '@/src/services/achievementIntegration';
+
+// After exercise completion
+await recordLearningActivity(
+  userId,
+  'module-id',
+  'exercise-type',
+  isCorrect,
+  xpEarned,
+  { /* optional metadata */ }
+);
+```
+
+### Avatar Integration
+Update avatar expressions based on performance:
+
+```typescript
+import { updateAvatarAfterExercise } from '@/src/services/avatarAchievementIntegration';
+
+await updateAvatarAfterExercise(
+  userId,
+  isCorrect,
+  consecutiveCorrect,
+  responseTimeMs,
+  difficulty
+);
+```
+
+### Performance Requirements
+- Quick Start response: <2 seconds
+- Avatar reactions: <500ms
+- Achievement toast display: <500ms
+
+### Documentation
+- `ACHIEVEMENT_SYSTEM_SUMMARY.md` - System overview
+- `ACHIEVEMENT_INTEGRATION_GUIDE.md` - Integration instructions
+- `ACHIEVEMENT_TESTING_GUIDE.md` - Testing guidelines
+- `ACHIEVEMENT_SYSTEM_FINAL_SUMMARY.md` - Complete implementation summary
+
+### Key Files
+- Models: `src/models/achievement.ts`
+- Storage: `src/storage/achievementStorage.ts`
+- Data: `src/data/achievements/`
+- Components: `src/components/feedback/`, `src/components/progress/`
+- Screens: `app/progress-dashboard.tsx`, `app/achievements.tsx`, `app/goal-settings.tsx`
