@@ -1,0 +1,230 @@
+# 词汇 CSV Agent 流水线 + CRUD 编辑器
+
+## 问题诊断
+
+当前 `EnglishVocabularyCurriculumAgent.build()` 是一个**单体 150+ 行**方法，同时完成了 CSV 行解析、POS 推断、例句生成、词组匹配和课程组装。这违背了 Agent 架构的单一职责原则，且无法独立测试/替换/增强各步骤。
+
+现有 [vocabDictionary.ts](file://wsl.localhost/Ubuntu-22.04/home/rookie/project/duoxx_server/src/pipeline/data/vocabDictionary.ts) 提供了 ~270 词多词性映射但**从未被引用**，导致所有词性默认为 `n.`。
+
+## 架构：6+1 Agent 流水线
+
+```mermaid
+graph LR
+  CSV[/"CSV 文件"/]
+  A1["① IngestAgent"]
+  A2["② SourceClassificationAgent"]
+  A3["③ VocabLineParserAgent"]
+  A4["④ VocabDictionaryEnrichmentAgent"]
+  A5["⑤ VocabExampleGeneratorAgent"]
+  A6["⑥ VocabPhraseAgent"]
+  A7["⑦ VocabCardAssemblerAgent"]
+  A8["⑧ CourseStructureAgent"]
+  QA["⑨ VocabularyQAAgent"]
+  VA["⑩ DomainEnglishAgent"]
+  RE["⑪ ReviewAgent"]
+
+  CSV --> A1 --> A2 -->|vocabulary| A3
+  A3 --> A4 --> A5 --> A6 --> A7 --> A8
+  A8 --> QA --> VA --> RE
+```
+
+---
+
+## Proposed Changes
+
+### Part A — 新增 6 个专职 Agent
+
+> 所有文件位于 `src/pipeline/agents/`, 保留原文件作 legacy 兼容。
+
+---
+
+#### [NEW] `vocabLineParserAgent.ts`
+
+**职责**：逐行解析 CSV，提取 `{word, phonetic, rawTranslation}`
+
+```ts
+export interface RawVocabEntry {
+  word: string;
+  phonetic: string;
+  rawTranslation: string;  // 原始中文翻译（未增强）
+}
+
+export class VocabLineParserAgent {
+  parse(normalizedText: string): RawVocabEntry[]
+}
+```
+
+从 `EnglishVocabularyCurriculumAgent.parseWordLine()` 的正则+去头逻辑中提取。
+
+---
+
+#### [NEW] `vocabDictionaryEnrichmentAgent.ts`
+
+**职责**：用内置词典 (`lookupWord`) 增强每个条目的词性
+
+```ts
+export interface EnrichedVocabEntry extends RawVocabEntry {
+  senses: ParsedSense[];   // 多词性义项
+  source: 'dictionary' | 'csv_parsed';
+}
+
+export class VocabDictionaryEnrichmentAgent {
+  enrich(entries: RawVocabEntry[]): EnrichedVocabEntry[]
+}
+```
+
+- **词典命中** → 直接用词典多词性
+- **未命中** → 用 `parseSensesFromTranslation()` 回退
+
+---
+
+#### [NEW] `vocabExampleGeneratorAgent.ts`
+
+**职责**：按词性从模板库为每个义项生成例句
+
+```ts
+export class VocabExampleGeneratorAgent {
+  generate(entries: EnrichedVocabEntry[]): EnrichedVocabEntry[]
+  // 为每个 sense 添加 examples: {en, zh}[]
+}
+```
+
+将现有 `pickTemplate()` + `VERB_TEMPLATES` / `NOUN_TEMPLATES` / `ADJ_TEMPLATES` 等移入此 Agent。
+
+---
+
+#### [NEW] `vocabPhraseAgent.ts`
+
+**职责**：从内置词组搭配表查找关联短语
+
+```ts
+export class VocabPhraseAgent {
+  attach(entries: EnrichedVocabEntry[]): EnrichedVocabEntry[]
+  // 为匹配的单词添加 phrases: WordPhrase[]
+}
+```
+
+将现有 `COMMON_PHRASES` 映射表和 `generatePhraseExample()` 移入此 Agent。
+
+---
+
+#### [NEW] `vocabCardAssemblerAgent.ts`
+
+**职责**：将增强后的词汇条目组装为 `CourseExercise[]`
+
+```ts
+export class VocabCardAssemblerAgent {
+  assemble(entries: EnrichedVocabEntry[]): CourseExercise[]
+}
+```
+
+合并同词性、生成 `aggregatedTranslation`、设置 `metadata` 字段。
+
+---
+
+#### [NEW] `courseStructureAgent.ts`（已存在但不同功能，新建为 `vocabCourseStructureAgent.ts`）
+
+**职责**：将练习列表包装成 `CourseSchemaV1`
+
+```ts
+export class VocabCourseStructureAgent {
+  buildCourse(exercises: CourseExercise[], document: IngestedDocument): CourseSchemaV1
+}
+```
+
+生成 lesson/unit/course 结构 + contentBlocks 摘要。
+
+---
+
+### Part B — VocabularyQAAgent (质量校验)
+
+#### [NEW] `vocabularyQAAgent.ts`
+
+```ts
+export class VocabularyQAAgent {
+  run(course: CourseSchemaV1): QAReport
+}
+```
+
+| 检查项 | 规则 | 修复 |
+|--------|------|------|
+| 音标缺失 | `phonetic` 为空 | 标记 `⚠️ 音标缺失` |
+| 词性不完整 | 全部 POS 为 `n.` 但词典有多词性 | 用词典覆盖 |
+| 模板例句 | 例句含 `I learned` | 标记 `⚠️ 模板例句` |
+| 短释义 | 翻译 < 2 字 | 标记 `⚠️ 释义不完整` |
+
+#### [MODIFY] `types.ts` — 增加 `QAFinding` + `QAReport` 接口
+
+---
+
+### Part C — Orchestrator 重编排
+
+#### [MODIFY] [contentPipelineOrchestrator.ts](file://wsl.localhost/Ubuntu-22.04/home/rookie/project/duoxx_server/src/pipeline/orchestrator/contentPipelineOrchestrator.ts)
+
+`runUntilHumanReview()` 对 vocabulary 分支改为：
+
+```ts
+// vocabulary pipeline
+const rawEntries = this.vocabLineParserAgent.parse(ingestedDocument.normalizedText);
+const enriched  = this.vocabDictEnrichmentAgent.enrich(rawEntries);
+const withExamples = this.vocabExampleAgent.generate(enriched);
+const withPhrases  = this.vocabPhraseAgent.attach(withExamples);
+const exercises    = this.vocabCardAssemblerAgent.assemble(withPhrases);
+const draftCourse  = this.vocabCourseStructureAgent.buildCourse(exercises, ingestedDocument);
+const qaReport     = this.vocabularyQAAgent.run(draftCourse);
+```
+
+保留 `EnglishVocabularyCurriculumAgent` 作为 legacy 备用，不删除。
+
+---
+
+### Part D — 前端 CRUD 编辑器
+
+#### Backend
+
+##### [MODIFY] [pipeline.js](file://wsl.localhost/Ubuntu-22.04/home/rookie/project/duoxx_server/src/routes/pipeline.js) — 3 新路由
+
+```
+PATCH  /api/pipeline/courses/:courseId/exercises/:exerciseId
+DELETE /api/pipeline/courses/:courseId/exercises/:exerciseId
+POST   /api/pipeline/courses/:courseId/exercises
+```
+
+##### [MODIFY] [contentPipelineService.js](file://wsl.localhost/Ubuntu-22.04/home/rookie/project/duoxx_server/src/services/contentPipelineService.js) — 3 新方法
+
+`updateExercise`, `deleteExercise`, `addExercise` — 操作 `payload.units[].lessons[].exercises[]`。
+
+#### Frontend
+
+##### [MODIFY] [pipelineApi.ts](file:///d:/06-project/expo_duo/duoxx/src/services/pipelineApi.ts) — 3 新 API
+
+##### [MODIFY] [PipelineDashboard.tsx](file:///d:/06-project/expo_duo/duoxx/components/admin/PipelineDashboard.tsx)
+
+- 每张卡增加 ✏️ 编辑 / 🗑️ 删除按钮
+- 右侧面板替换为编辑表单（word/phonetic/senses/examples）
+- 顶部 ➕ 添加新单词 按钮
+
+---
+
+### Part E — Workflow 文件
+
+#### [NEW] `.agents/workflows/csv-import-pipeline.md`
+
+定义整个 CSV 导入教研流水线的 Agent 编排步骤，可通过 `/csv-import-pipeline` 触发。
+
+---
+
+## Verification Plan
+
+### Automated
+```bash
+# TypeScript build
+cd /home/rookie/project/duoxx_server && npm run build:pipeline
+# Existing test (regression)
+cd /home/rookie/project/duoxx_server && npx jest src/pipeline/agents/structuredDataTeacherAgent.test.js --no-cache
+```
+
+### Manual
+1. 上传 CSV → 确认 `brown`/`green`/`run` 显示多词性
+2. Pipeline 结果含 `qaReport` 标记质量问题
+3. 前端 CRUD：编辑/删除/新增单词卡

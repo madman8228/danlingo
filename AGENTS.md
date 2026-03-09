@@ -12,6 +12,48 @@ DuoXX is a gamified language learning app built with Expo and React Native. It f
 - Achievement system
 - Property-based testing with fast-check
 
+
+Long-term memory
+- Update `PROJECT_MEMORY.md` after each session:
+  - What changed (files + intent)
+  - What was learned (architecture/behavior)
+  - Next steps / open questions
+- Keep the memory file concise and current.
+
+## Closed-Loop Autopilot Protocol (Default)
+
+When the user gives a task, run this default execution flow unless the user asks for a different process:
+
+1. Scope and acceptance
+- Translate the user request into explicit acceptance criteria.
+- If details are missing but can be inferred from repo context, proceed without blocking.
+
+2. Parallel execution strategy
+- Split work into non-conflicting subtasks (UI, API, data, tests, docs).
+- Execute independent reads/checks in parallel whenever possible.
+
+3. Implementation
+- Apply minimal, production-safe code changes aligned with existing architecture.
+- Prefer simple operator UX over exposing internal technical controls.
+
+4. Verification gate (must run before delivery)
+- Run targeted syntax/type checks.
+- Run relevant tests (unit/integration/e2e or feature smoke path).
+- Validate key user path end-to-end for the changed feature.
+- Fix failures before final response.
+
+5. Delivery contract
+- Report: changed files, key behavior changes, commands/tests run, results.
+- Include known risks and concrete next-step options only when needed.
+
+6. Session persistence
+- Update `PROJECT_MEMORY.md` at end of each session with:
+  - files changed + intent
+  - architecture/behavior learned
+  - next steps/open questions
+
+Reference: `AUTOPILOT_WORKFLOW.md`
+
 ## Build Commands
 
 ### Development
