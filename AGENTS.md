@@ -33,7 +33,8 @@ When the user gives a task, run this default execution flow unless the user asks
 - Execute independent reads/checks in parallel whenever possible.
 
 3. Implementation
-- Apply minimal, production-safe code changes aligned with existing architecture.
+- Apply production-safe, root-cause-first changes aligned with target architecture.
+- Do not prefer "minimal patch" if it preserves a known bad data model or creates recurring cleanup debt.
 - Prefer simple operator UX over exposing internal technical controls.
 
 4. Verification gate (must run before delivery)
@@ -236,6 +237,19 @@ describe('Module Name', () => {
 - Use semantic color names from Colors object
 - Platform-specific fonts from Fonts object
 - Consistent spacing and sizing
+
+### Admin UI Constitution (Mandatory)
+- Scope: applies to all admin pages (global mandatory), not only `/admin/pipeline`.
+- Flat layout first: avoid nested "card inside card" container stacks.
+- Do not use "big ring wrapping small rings" visual patterns in admin pages.
+- Prefer single-layer row/list presentation with direct actions over multi-level boxed wrappers.
+- If hierarchy must be shown, use text metadata (e.g., `Unit/Lesson`) instead of extra nested frames.
+
+### Product/Data Constitution (Mandatory)
+- Root-cause over quick patch: for new-project foundations, do not accept tactical fixes that create long-term debt.
+- Source-first correction: if issue originates from raw source assets (CSV/Markdown/etc.), fix source files and re-import; runtime patching is only temporary incident mitigation.
+- Contract-first publishing: data must satisfy exercise contract before entering DB; reject invalid rows in lint/import.
+- Fill-in-the-blank must be structured: avoid plain marker-dependent strings as the only source of truth.
 
 ### File Organization
 ```
