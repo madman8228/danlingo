@@ -55,6 +55,7 @@ A task is done only when all are true:
 - changed code validated
 - user-facing flow confirmed
 - `PROJECT_MEMORY.md` updated
+- `PROJECT_PROGRESS.md` updated
 
 ## Persistent Memory Rules
 

@@ -19,6 +19,7 @@ Long-term memory
   - What was learned (architecture/behavior)
   - Next steps / open questions
 - Keep the memory file concise and current.
+- Update `PROJECT_PROGRESS.md` after each completed task so the current implementation status stays visible without reading the whole session log.
 
 ## Closed-Loop Autopilot Protocol (Default)
 
@@ -52,6 +53,10 @@ When the user gives a task, run this default execution flow unless the user asks
   - files changed + intent
   - architecture/behavior learned
   - next steps/open questions
+- Update `PROJECT_PROGRESS.md` at end of each completed task with:
+  - current feature status
+  - what is blocked / not yet done
+  - the next concrete work item
 
 Reference: `AUTOPILOT_WORKFLOW.md`
 
