@@ -1,21 +1,44 @@
-ï»¿## 2026-03-20 (Exercise Review semantic simplification)
+## 2026-03-20 (Mongo lexical quiz option migration + distractor hardening)
+- What changed:
+  - Added backend helper `\\wsl.localhost\Ubuntu-22.04\home\rookie\project\duoxx_server\src\services\lexicalQuizOptionRules.js` and test `...\lexicalQuizOptionRules.test.js` to normalize translation-choice options with deterministic rotation and Chinese-translation-only distractors.
+  - Added backend migration script `\\wsl.localhost\Ubuntu-22.04\home\rookie\project\duoxx_server\scripts\migrate-lexical-quiz-options-v1.js` plus package script `migrate:lexical-quiz-options-v1` for dry-run/apply rewriting of legacy `translation_choice / word_card` options in `SeedQuiz` and `GeneratedQuizVersion`.
+  - Kept Turing's distractor-quality upgrade in place for current generation/local fallback: same POS first, then closer difficulty, then overlapping scene tags; `true/false` and non-Chinese answers are excluded.
+  - Removed the accidental local fake `D:\06-project\expo_duo\duoxx_server` directory after copying the real helper/test into the actual backend workspace.
+- What was learned:
+  - The real backend lives under the WSL workspace; writing to a same-named local Windows folder silently creates dead files that the server never uses.
+  - Old lexical quiz rows can now be normalized safely in dry-run mode before any write, which is the right guardrail for production Mongo cleanup.
+  - Current lexical asset data does not reliably carry difficulty/scene metadata yet, so the new distractor scoring must treat those fields as optional and degrade gracefully back to POS-first matching.
+- Next steps / open questions:
+  - Run the migration with `--apply` in the actual target environment after reviewing the dry-run output.
+  - Decide whether to extract the shared distractor rules into one cross-runtime source or keep the server/helper and frontend fallback implementations separate.
+## 2026-03-20 (Exercise Review approve-and-activate simplification)
+- What changed:
+  - Updated duoxx/components/admin/LexicalQuizReviewPanel.tsx so the main review action is now Åú×¼²¢ÉúĞ§, internally sequencing approve then activate.
+  - Removed the separate visible activation button for non-active questions and replaced the active-state button with a passive µ±Ç°Ìâ badge.
+  - Updated duoxx/src/config/adminLexicalQuizReview.ts to match the simplified operator wording.
+- What was learned:
+  - The user objection was not about backend traceability; it was about exposing a two-step workflow for a single operator intent.
+  - Folding the two calls into one visible action keeps the existing backend behavior while removing unnecessary operator friction.
+- Next steps / open questions:
+  - If the learning-side active quiz consumption is wired next, verify that Åú×¼²¢ÉúĞ§ is enough and no explicit re-activation control is still needed in normal operations.
+## 2026-03-20 (Exercise Review semantic simplification)
 - What changed:
   - Updated duoxx/components/admin/LexicalQuizReviewPanel.tsx to group review data by sourceSenseKey instead of listing raw quiz items as the primary left-hand unit.
-  - Reframed the operator UI so it no longer exposes ä¿åº•é¢˜ / åŠ¨æ€é¢˜ / å½“å‰ç‰ˆæœ¬; the visible model is now ä¹‰é¡¹ -> è¯¥ä¹‰é¡¹ä¸‹çš„å…¨éƒ¨ç»ƒä¹ é¢˜.
-  - Replaced the generic generation wording with explicit actions: ç”Ÿæˆé€‰æ‹©é¢˜ and ç”Ÿæˆåˆ¤æ–­é¢˜.
+  - Reframed the operator UI so it no longer exposes ±£µ×Ìâ / ¶¯Ì¬Ìâ / µ±Ç°°æ±¾; the visible model is now ÒåÏî -> ¸ÃÒåÏîÏÂµÄÈ«²¿Á·Ï°Ìâ.
+  - Replaced the generic generation wording with explicit actions: Éú³ÉÑ¡ÔñÌâ and Éú³ÉÅĞ¶ÏÌâ.
   - Tightened the left-hand review list density so grouped sense rows consume less vertical space.
   - Updated duoxx/src/config/adminLexicalQuizReview.ts so review labels and action copy match the simplified operator model.
 - What was learned:
   - The operator problem was not backend versioning itself; it was leaking internal lifecycle concepts into the UI.
   - Keeping versioning in the data layer while hiding it from operators is the pragmatic middle ground for now.
 - Next steps / open questions:
-  - Verify in-browser whether è®¾ä¸ºç”Ÿæ•ˆé¢˜ should remain a separate action or be merged into approve.
+  - Verify in-browser whether ÉèÎªÉúĞ§Ìâ should remain a separate action or be merged into approve.
   - The import review panel still has separate historical encoding cleanup work outside this Exercise Review simplification.
 ## 2026-03-20 (Import panel tab-switch persistence)
 - What changed:
   - Added `duoxx/src/storage/lexicalAssetImportSessionStorage.ts` to persist the `Import & Review` session state locally.
   - Updated `duoxx/components/admin/LexicalAssetImportPanel.tsx` to hydrate/persist `fileName`, `fileType`, `review`, `selectedEntryKey`, `status`, `entryQuery`, and `entryFilter` across tab unmount/remount.
-  - Added a `æ¸…ç©ºä¼šè¯` action for explicitly clearing the local import session.
+  - Added a `Çå¿Õ»á»°` action for explicitly clearing the local import session.
 - What was learned:
   - The import panel loses state because `OperatorWorkbench` conditionally unmounts the tab content when switching to `Exercise Review`.
   - The correct fix within the requested scope is local session persistence, not changing quiz APIs or keeping the panel mounted globally.
@@ -44,7 +67,7 @@
   - Added backend lexical quiz service `duoxx_server/src/services/lexicalQuizService.js` implementing lexical asset import, seed quiz persistence, generated quiz versioning, review-state updates, activation, and active quiz reads.
   - Added pipeline routes in `duoxx_server/src/routes/pipeline.js` for seed import, list, generate, approve, reject, activate, and active quiz listing.
   - Added learning-side read endpoint `GET /api/learning/lexical-quizzes/active` in `duoxx_server/src/routes/learning.js`.
-  - Repaired a pre-existing broken string literal in `duoxx_server/src/routes/learning.js` (`ä¸­è€ƒ` / `æ—¥å¸¸`) so the route file can load again.
+  - Repaired a pre-existing broken string literal in `duoxx_server/src/routes/learning.js` (`ÖĞ¿¼` / `ÈÕ³£`) so the route file can load again.
   - Updated `duoxx/src/services/pipelineApi.ts` so lexical quiz review methods are backend-first with local AsyncStorage fallback.
   - Deleted unused V4 lexical import files from Expo app:
     - `duoxx/src/services/lexicalAssetImport.ts`
@@ -58,6 +81,17 @@
   - Wire the actual lesson/learning UI to `GET /api/learning/lexical-quizzes/active`.
   - Decide when to remove the frontend lexical quiz local fallback after backend smoke testing.
   - Remove the remaining non-lexical legacy candidate review code once the Mongo-backed lexical quiz path is stable.
+## 2026-03-23 (Exercise Review duplicate judgment-question dedupe)
+- What changed:
+  - Updated `duoxx_server/src/services/lexicalQuizService.js` so review-list loading deduplicates identical quizzes by semantic signature before the operator UI sees them.
+  - Added generation-side duplicate suppression so `translation_choice` / `true_false` generation skips writing a new row when the visible question would match an existing seed or generated quiz.
+  - Added backend regression coverage in `duoxx_server/src/services/__tests__/lexicalQuizService.test.js` for both review dedupe and duplicate-skip generation.
+- What was learned:
+  - The duplicate judgment questions were not a renderer problem; the service layer was returning both seed and generated rows for the same visible question.
+  - Preventing duplicates at generation time is necessary, but review-list dedupe is still useful for historical Mongo data that already contains duplicates.
+- Next steps / open questions:
+  - Smoke-test one legacy course in the learner after the backend change.
+  - If historical Mongo duplication keeps surfacing in old courses, add a one-time cleanup migration keyed by the same semantic signature.
 # Project Memory
 
 ## 2026-03-03
@@ -880,7 +914,8 @@
   - If further compression is needed, we can collapse Unit/Lesson secondary text to tooltip-on-hover on web.## 2026-03-10 (pipeline explanation review close button)
 - What changed:
   - Updated duoxx/components/admin/PipelineDashboard.tsx:
-    - added closeExplanationReview() to clear active review context (ctiveTarget, currentDraft, promptHint, eviewNote, editablePayload).
+    - added closeExplanationReview() to clear active review context (ctiveTarget, currentDraft, promptHint, 
+eviewNote, editablePayload).
     - added hasReviewContext state-derived flag for button enabled/disabled behavior.
     - changed Explanation Review header into a row with a Close action button.
     - reused closeExplanationReview() in loadCourseDetails(..., keepActiveSelection = false) to avoid duplicated reset logic.
@@ -1285,7 +1320,7 @@
 
 ## 2026-03-10 (pipeline duplicate-course root-cause check)
 - What changed:
-  - Investigated why `/admin/pipeline` shows duplicate course title `15å¤©èƒŒå®Œåˆä¸­3500è¯`.
+  - Investigated why `/admin/pipeline` shows duplicate course title `15Ìì±³Íê³õÖĞ3500´Ê`.
   - Confirmed duplicates are real DB records in `publishedcourses`, not frontend rendering duplication.
   - Verified two active records exist for same `title + language` with different `_id`, `version`, and `sourceJobId`.
   - Traced backend logic:
@@ -1299,20 +1334,20 @@
   - Decide desired rule: keep one active row per logical course (archive older), or keep multi-version but list latest only.
   - Then enforce at service+DB level (upsert/unique index or status-aware partial unique index).
 
-## 2026-03-10 (admin pipelineä¹±ç ä¿®å¤)
+## 2026-03-10 (admin pipelineÂÒÂëĞŞ¸´)
 - What changed:
   - Fixed mojibake/garbled Chinese UI labels in `duoxx/components/admin/PipelineDashboard.tsx`.
-  - Replaced corrupted strings in course mode selector, table headers (`å‘éŸ³/è¯¦è§£`), action button states (`ç”Ÿæˆ/ç¼–è¾‘/ä¿®æ”¹`), and exercise-edit modal labels/placeholders/buttons.
+  - Replaced corrupted strings in course mode selector, table headers (`·¢Òô/Ïê½â`), action button states (`Éú³É/±à¼­/ĞŞ¸Ä`), and exercise-edit modal labels/placeholders/buttons.
   - No API contract or data model changes; UI copy only.
 - What was learned:
-  - The reported â€œå†…å®¹ item ä¹±ç â€ came from corrupted frontend literals in the admin page, not from latest DB course payload encoding.
+  - The reported ¡°ÄÚÈİ item ÂÒÂë¡± came from corrupted frontend literals in the admin page, not from latest DB course payload encoding.
 - Next steps / open questions:
   - If any old stored course text itself is still mojibake, add a one-time DB repair script and ingest-time encoding guard.
 
-## 2026-03-10 (L5é¢˜å¹²æ¢è¡Œä¸é¢˜åº“æºæ ¼å¼æ ¹å› )
+## 2026-03-10 (L5Ìâ¸É»»ĞĞÓëÌâ¿âÔ´¸ñÊ½¸ùÒò)
 - What changed:
   - Updated `duoxx/src/components/exercises/MultipleChoiceExercise.tsx` to stop forcing line breaks after numeric prefix + em-dash in question stems.
-  - New behavior keeps stems in one line (unless source already contains explicit newline), and normalizes legacy pattern like `4. â€”Hello` to `4. Hello`.
+  - New behavior keeps stems in one line (unless source already contains explicit newline), and normalizes legacy pattern like `4. ¡ªHello` to `4. Hello`.
 - What was learned:
   - The visible `4.` / `Hello` split is caused by frontend formatting logic, not user action.
   - Additional content integrity risk exists in source CSV: unquoted commas in exercise stem rows can split fields and truncate stems during import.
@@ -1322,7 +1357,7 @@
 
 ## 2026-03-10 (L5 line-break fix + reviewed question-asset workflow)
 - What changed:
-  - Fixed exercise source row answers in `duoxx/resources/7U/æµœçƒ˜æš€é—å œç«·éªå¯¸éª‡æ¶“å©‚å”½Unit 1 Good morning! é­ãƒ¨ç˜‘éç‘°å¼·ç¼å†§ç¯„æ£°æ©ˆç´™csvéç…ç´¡é”›?csv` (rows 76-78) so strict import no longer fails on missing answer.
+  - Fixed exercise source row answers in `duoxx/resources/7U/äººæ•™ç‰ˆä¸ƒå¹´çº§ä¸Šå†ŒUnit 1 Good morning! çŸ¥è¯†ç‚¹åŠç»ƒä¹ é¢˜ï¼ˆcsvæ ¼å¼ï¼?csv` (rows 76-78) so strict import no longer fails on missing answer.
   - Re-verified `duoxx/scripts/course-import/import-7u.js` strict export path; `npm run course:export:7u:mongo-csv` now completes with `0 warnings`.
   - Confirmed exported row for L5 Q4 remains single-line stem in `duoxx/resources/7U/.build/mongo-csv/pep_g7_upper_u1/exercise_items.csv`.
   - Added reusable text asset workflow files:
@@ -1349,7 +1384,7 @@
   - Applied overwrite import to MongoDB in WSL environment using:
     - `node scripts/course-import/import-mongo-course-csv.js --input resources/7U/.build/mongo-csv --extra-exercise-csv resources/7U/.build/review/exercise_items.reviewed.csv --apply --mongo-uri mongodb://127.0.0.1:27017 --mongo-db duoxx`
   - Import result: units=1, lessons=8, knowledge=158, exercises=61, lesson_items=219 (all matched+modified).
-  - Verified DB row `exercise_id=ex_44c1334112de39cce860` stem is single-line `4. éˆ¥æ“§ello, Li Ming! éˆ¥æ“¾_____, Zhang Wei!`.
+  - Verified DB row `exercise_id=ex_44c1334112de39cce860` stem is single-line `4. â€”Hello, Li Ming! â€”______, Zhang Wei!`.
 - What was learned:
   - Windows shell lacked `mongosh` binary; running import inside WSL resolves apply step reliably.
 - Next steps / open questions:
@@ -1371,7 +1406,7 @@
   - Backend service `contentPipelineService.writeCourse` now defaults to update mode when `courseId` is absent but an active same-title+language course exists; create mode is used only when no match exists.
   - Relaxed `validateCourseWritePayload` to allow write requests without `sourceJobId` when they can resolve to update path by natural key.
   - Added one-time cleanup script `duoxx_server/scripts/cleanup-duplicate-courses.js` and npm script `cleanup:duplicate-3500`.
-  - Executed cleanup for duplicated `15æ¾¶â•„å„—ç€¹å±½åµæ¶“?500ç’‡å³˜ records: kept `_id=69aaafeac973401a4d7270e7`, deleted `_id=69aaa910f4ab43d6ef08b80b`.
+  - Executed cleanup for duplicated `15å¤©èƒŒå®Œåˆä¸?500è¯` records: kept `_id=69aaafeac973401a4d7270e7`, deleted `_id=69aaa910f4ab43d6ef08b80b`.
   - Updated one source job reference from deleted course id to kept course id.
 - What was learned:
   - Duplicate active courses were caused by create-on-write behavior when `courseId` was omitted.
@@ -1393,7 +1428,7 @@
   - Updated `duoxx/components/admin/PipelineDashboard.tsx` `formatExerciseTypeTag()` to enforce Chinese labels across all courses.
   - Added type-key normalization for common English variants (`fill blank`, `multiple choice`, `true/false`, etc.).
   - Preserved override only when it is already Chinese text; otherwise mapped to Chinese dictionary.
-  - Added fallback Chinese label `å…¶ä»–é¢˜å‹` for unknown types.
+  - Added fallback Chinese label `ÆäËûÌâĞÍ` for unknown types.
 - What was learned:
   - Type labels can vary by source metadata; normalization before mapping is needed for consistent operator UI language.
 - Next steps / open questions:
@@ -1427,7 +1462,7 @@
   - Frontend `duoxx/app/(tabs)/courses.tsx` now merges local static metadata with remote `/api/learning/courses` results and dedupes by normalized title.
   - Frontend learning API expanded in `duoxx/src/services/learningApi.ts` with `getCourses()`.
 - What was learned:
-  - `/courses` tab previously only rendered static metadata from `src/data/courses/index.ts`, so DB-published courses (including `15æ¾¶â•„å„—ç€¹å±½åµæ¶“?500ç’‡å³˜) could never appear.
+  - `/courses` tab previously only rendered static metadata from `src/data/courses/index.ts`, so DB-published courses (including `15å¤©èƒŒå®Œåˆä¸?500è¯`) could never appear.
   - Using `vocab-course-<id>` keeps existing route rule (`startsWith('vocab-')`) unchanged while enabling direct DB course binding.
 - Next steps / open questions:
   - Consider adding server-side filtering/sorting for `/api/learning/courses` (by tag/category) when course count grows.
@@ -1486,7 +1521,7 @@
 ## 2026-03-11 (pipeline show courseNo in admin list)
 - What changed:
   - Updated `duoxx/src/services/pipelineApi.ts` `CourseDraft` type to include optional `courseNo`.
-  - Updated `duoxx/components/admin/PipelineDashboard.tsx` to show each course row serial label (`åºå·ï¼š<courseNo>`), with fallback `åºå·ï¼š--` when missing.
+  - Updated `duoxx/components/admin/PipelineDashboard.tsx` to show each course row serial label (`ĞòºÅ£º<courseNo>`), with fallback `ĞòºÅ£º--` when missing.
 - What was learned:
   - Backend already returns `courseNo`, but missing frontend type/rendering made the unique sequence invisible to operators.
 - Next steps / open questions:
@@ -1494,7 +1529,7 @@
 ## 2026-03-11 (pipeline list courseNo inline before title)
 - What changed:
   - Updated `duoxx/components/admin/PipelineDashboard.tsx` course list title rendering to single-line `courseNo. title` format.
-  - Removed separate second-line serial display (`åºå·ï¼šN`) from each course row.
+  - Removed separate second-line serial display (`ĞòºÅ£ºN`) from each course row.
 - What was learned:
   - Operators scan left list faster with one-line primary text; serial number should behave as title prefix, not metadata row.
 - Next steps / open questions:
@@ -1515,12 +1550,12 @@
   - Existing app flow can keep the generic `LessonEngine`; only pre-session ordering + post-answer review recording is needed to support spaced vocabulary review.
   - A lightweight FSRS-like model works as a drop-in without changing current exercise component contracts.
 - Next steps / open questions:
-  - Add â€œtoday due / new / masteredâ€ counters to lesson header UI for transparency.
+  - Add ¡°today due / new / mastered¡± counters to lesson header UI for transparency.
   - Optional backend sync API for vocab memory states to support multi-device continuity.
 ## 2026-03-11 (pipeline header alignment: title + edit icon + answer mode)
 - What changed:
   - Updated `duoxx/components/admin/PipelineDashboard.tsx` content header layout.
-  - Moved answer mode controls (`é€‰æ‹©/è¾“å…¥/å¯¹è¯`) from batch toolbar into the title row.
+  - Moved answer mode controls (`Ñ¡Ôñ/ÊäÈë/¶Ô»°`) from batch toolbar into the title row.
   - Title row now renders in order: title -> edit icon -> answer mode buttons.
   - Removed duplicated old quick-mode block from batch action area.
 - What was learned:
@@ -1581,7 +1616,7 @@
   - Updated `duoxx/src/components/exercises/fillBlankAnswerMode.ts` to stop injecting fallback correct options into choice lists when backend options are wrong/missing.
   - Updated `duoxx/src/components/exercises/fillBlankAnswerMode.test.ts` expectation to reflect non-healing behavior.
 - What was learned:
-  - Even â€œfriendly merge/dedupeâ€ and â€œauto-insert correct optionâ€ logic can hide backend data defects and delay true root-cause fixes.
+  - Even ¡°friendly merge/dedupe¡± and ¡°auto-insert correct option¡± logic can hide backend data defects and delay true root-cause fixes.
 - Next steps / open questions:
   - Sweep other backend-facing modules and classify fallback types into:
     1) allowed presentation-only mapping
@@ -1617,7 +1652,7 @@
   - Added `catch` branch for unexpected runtime exceptions during create.
   - Disabled create button when not parent account or request is in-flight.
 - What was learned:
-  - The primary â€œno responseâ€ UX came from relying on modal alert feedback only; in some environments this appears as silent failure.
+  - The primary ¡°no response¡± UX came from relying on modal alert feedback only; in some environments this appears as silent failure.
 - Next steps / open questions:
   - Optional: add a success inline toast/banner in settings for consistency with error feedback.
 ## 2026-03-11 (constitution update + cloze upstream contract)
@@ -1647,7 +1682,7 @@
 - What changed:
   - Updated `duoxx/components/admin/PipelineDashboard.tsx` to replace JSX text-node unicode escape literals with real display text.
   - Fixed table headers and row action text that rendered as raw `\\uXXXX` in UI:
-    - `å‘éŸ³`, `è¯¦è§£`, row action `ç¼–è¾‘`, selection mark `?`.
+    - `·¢Òô`, `Ïê½â`, row action `±à¼­`, selection mark `?`.
   - Verified with targeted lint: `npm run lint -- --no-error-on-unmatched-pattern components/admin/PipelineDashboard.tsx` (pass).
 - What was learned:
   - In JSX text nodes, `\\uXXXX` is rendered literally; unicode escape decoding only happens inside JS string literals/expressions.
@@ -1672,7 +1707,7 @@
   - Updated `duoxx/app/settings.tsx` child-account UX:
     - create-form password now supports show/hide toggle (eye icon), and generated password auto-switches to visible.
     - child account list no longer duplicates display name and username when they are identical.
-    - list now shows password line with reveal toggle and added `é‡ç½®å¯†ç ` action per child account.
+    - list now shows password line with reveal toggle and added `ÖØÖÃÃÜÂë` action per child account.
     - reset action generates a new password, persists it, and shows inline success feedback.
   - Updated `duoxx/src/models/user.ts`:
     - added optional `ChildAccount.passwordPlain` (local-only retrieval field).
@@ -1698,7 +1733,7 @@
     - Web uses `globalThis.confirm(...)`
     - Native keeps `Alert.alert(...)` with Promise-based resolve.
   - Replaced delete-result alert-only feedback with inline feedback (`childFormError` / `childFormSuccess`) so users always see outcome.
-  - Added row-scoped delete loading key (`delete:<childId>`) and in-row `åˆ é™¤ä¸­...` state, avoiding prior global lock behavior from `Boolean(childActionLoadingId)`.
+  - Added row-scoped delete loading key (`delete:<childId>`) and in-row `É¾³ıÖĞ...` state, avoiding prior global lock behavior from `Boolean(childActionLoadingId)`.
   - Kept UI structure minimal (same delete entry icon), no extra modal/card layer.
   - Added automated coverage in `duoxx/src/services/__tests__/familyAccountService.test.ts`:
     - `deletes child account and shrinks child list`.
@@ -1719,8 +1754,8 @@
   - Optional: if needed later, replace removed success text with subtle non-persistent toast to avoid layout shifts.
 ## 2026-03-12 (swipe entry merged into learning tab; standalone tab removed)
 - What changed:
-  - Updated `duoxx/app/(tabs)/_layout.tsx` to remove the standalone `swipe-learning` bottom tab; tabs now keep `å­¦ä¹  / è¯¾ç¨‹ / æˆ‘çš„` only.
-  - Updated `duoxx/app/(tabs)/index.tsx` to add a high-priority `åˆ·é¢˜å­¦è‹±è¯­` card at the top of the learning page tool section, routing to `/modules/swipe-learning`.
+  - Updated `duoxx/app/(tabs)/_layout.tsx` to remove the standalone `swipe-learning` bottom tab; tabs now keep `Ñ§Ï° / ¿Î³Ì / ÎÒµÄ` only.
+  - Updated `duoxx/app/(tabs)/index.tsx` to add a high-priority `Ë¢ÌâÑ§Ó¢Óï` card at the top of the learning page tool section, routing to `/modules/swipe-learning`.
   - Deleted legacy route file `duoxx/app/(tabs)/swipe-learning.tsx` (no compatibility route retained).
   - Updated `duoxx/src/modules/swipe-learning/screens/SwipeLearningScreen.tsx` to fully own the swipe screen implementation in module layer and removed reverse dependency on app route files.
 - What was learned:
@@ -1850,7 +1885,7 @@
     - added empty-state hint when no preview/candidate result.
   - Normalized file encoding to UTF-8 without BOM and resolved hook/lint warnings.
 - What was learned:
-  - Operators expect selection to immediately show preview results; requiring manual preview click causes éˆ¥æ¸˜o resultéˆ¥?confusion.
+  - Operators expect selection to immediately show preview results; requiring manual preview click causes â€œno resultâ€?confusion.
 - Next steps / open questions:
   - Optional: add an explicit toggle `Auto Preview On/Off` for very large rule sets.
 ## 2026-03-12 (Rules V2 Studio readability + non-match visibility)
@@ -1967,9 +2002,9 @@
       - added knowledge/task/coverage API methods
     - `duoxx/app/(tabs)/index.tsx`:
       - added new top-level growth entry cards:
-        - `ç»§ç»­ä»Šå¤©çš„å¤„æ–¹`
-        - `ç»§ç»­å¼±ç‚¹ä¿®å¤`
-        - `å¼€å§‹ä»»åŠ¡è®­ç»ƒ`
+        - `¼ÌĞø½ñÌìµÄ´¦·½`
+        - `¼ÌĞøÈõµãĞŞ¸´`
+        - `¿ªÊ¼ÈÎÎñÑµÁ·`
     - Added new pages:
       - `duoxx/app/prescriptions.tsx`
       - `duoxx/app/weakness-workbench.tsx`
@@ -2165,8 +2200,10 @@
 ## 2026-03-13 (architecture workbench stale filter + task empty state)
 - Changed files + intent:
   - duoxx/components/admin/ArchitectureWorkbench.tsx: clarified the Tasks empty state so operators understand that Start Task Debug appears only after a task blueprint exists and is selected.
-  - duoxx_server/src/services/contentPipelineService.js: fixed listExerciseSnapshots() so eviewState is applied to the snapshot query; stale filtering now returns only stale snapshots.
-  - duoxx_server/src/services/contentPipelineService.test.js: added test coverage asserting the snapshot query receives the requested eviewState.
+  - duoxx_server/src/services/contentPipelineService.js: fixed listExerciseSnapshots() so 
+eviewState is applied to the snapshot query; stale filtering now returns only stale snapshots.
+  - duoxx_server/src/services/contentPipelineService.test.js: added test coverage asserting the snapshot query receives the requested 
+eviewState.
 - Learned:
   - The grey stale actions were caused by a backend filter bug rather than the button logic; once corrected, zero-result stale views are represented honestly.
   - Admin task-debug affordances need an explicit empty-state explanation or operators read the missing CTA as a broken feature.
@@ -2185,11 +2222,18 @@
 ## 2026-03-16 (review hub knowledge/task approval flow)
 - Changed files + intent:
   - duoxx/components/admin/OperatorWorkbench.tsx: upgraded Knowledge Review and Task Review from read-only pages into real review flows with status filters, edit fields, and Approve / Reject / Save Edit actions.
-  - duoxx/src/services/pipelineApi.ts: added eviewStatus support plus update/approve/reject APIs for KnowledgeNode and TaskBlueprint.
-  - duoxx_server/src/models/KnowledgeNode.js: added eviewStatus and eviewMeta.
-  - duoxx_server/src/models/TaskBlueprint.js: added eviewStatus and eviewMeta.
-  - duoxx_server/src/services/contentPipelineService.js: added list filtering by eviewStatus, plus update/review methods for knowledge nodes and task blueprints; rejected suggestions now archive automatically.
-  - duoxx_server/src/routes/pipeline.js: added PATCH, pprove, and eject routes for knowledge nodes and task blueprints.
+  - duoxx/src/services/pipelineApi.ts: added 
+eviewStatus support plus update/approve/reject APIs for KnowledgeNode and TaskBlueprint.
+  - duoxx_server/src/models/KnowledgeNode.js: added 
+eviewStatus and 
+eviewMeta.
+  - duoxx_server/src/models/TaskBlueprint.js: added 
+eviewStatus and 
+eviewMeta.
+  - duoxx_server/src/services/contentPipelineService.js: added list filtering by 
+eviewStatus, plus update/review methods for knowledge nodes and task blueprints; rejected suggestions now archive automatically.
+  - duoxx_server/src/routes/pipeline.js: added PATCH, pprove, and 
+eject routes for knowledge nodes and task blueprints.
   - duoxx_server/src/services/contentPipelineService.test.js: added coverage for knowledge approval and task update flows.
 - Learned:
   - The operator-first admin surface only becomes credible once non-exercise suggestions have real review state transitions; read-only summaries are not enough.
@@ -2226,7 +2270,7 @@
   - Defaulting Architecture Workbench to review-only significantly lowers operator cognitive load while preserving advanced controls.
 - Next steps / open questions:
   - Add backend unique index strategy for candidate dedup signature to harden against race conditions.
-  - Add explicit â€œskip reasonâ€ visibility in RuleTemplateWorkbench when generation returns skippedCount.
+  - Add explicit ¡°skip reason¡± visibility in RuleTemplateWorkbench when generation returns skippedCount.
   - Evaluate moving more day-to-day operations from Architecture Workbench into Review Hub to keep Advanced truly exceptional.
 ## 2026-03-16 (candidate dedup DB hardening + conflict recovery)
 - Changed files + intent:
@@ -2254,7 +2298,8 @@
 - Learned:
   - Operators need actionable skip diagnostics, not only aggregate skipped counts, to trust auto-generation behavior.
 - Next steps / open questions:
-  - Add reason codes for more paths (ule_not_matched, invalid_sentence_asset) if needed for deeper triage.
+  - Add reason codes for more paths (
+ule_not_matched, invalid_sentence_asset) if needed for deeper triage.
 ## 2026-03-16 (import wizard v2: csv/markdown/txt via admin page)
 - Changed files + intent:
   - `duoxx/components/admin/OperatorWorkbench.tsx`: implemented Import Wizard V2 (5-step flow) in Review Hub -> Import: upload source, structure parse, business validation, draft review edit, and publish action; added format-aware template download buttons for CSV/MD/TXT.
@@ -2281,7 +2326,7 @@
   - Remaining `shadow*`, `pointerEvents`, and `expo-av` messages are framework deprecation warnings, not blockers; they should be cleaned in separate focused refactors.
   - If web startup is still flaky on a specific machine, compare local shell/browser policy rather than app code first.## 2026-03-17 (import wizard preview visibility)
 - Changed files + intent:
-  - `duoxx/components/admin/OperatorWorkbench.tsx`: Import tab middle panel now explains Step 2/Step 3 responsibilities and renders `ç€µç…å†æ£°æ¨¼æ´°æ£°å‹®î`, showing each parsed exercise with type, prompt, answer, options, and knowledge point.
+  - `duoxx/components/admin/OperatorWorkbench.tsx`: Import tab middle panel now explains Step 2/Step 3 responsibilities and renders `å¯¼å…¥é¢˜ç›®é¢„è§ˆ`, showing each parsed exercise with type, prompt, answer, options, and knowledge point.
 - Learned:
   - Operators do not need opaque step-completion messages; they need immediate parsed-question visibility before publish.
   - For import UX, Step 2 is the correct place to surface extracted exercises, while Step 3 should remain validation-only.
@@ -2343,7 +2388,7 @@
   - duoxx/components/admin/OperatorWorkbench.tsx: updated Sentence CSV Template to use the same first-row Chinese positional annotation pattern as the Word template, with unicode-escaped Chinese sample text to keep downloads stable.
   - duoxx/src/services/__tests__/adminImportWizard.test.ts: added a sentence-template comment-row test so annotated sentence CSV files can round-trip through upload parsing.
 - Learned:
-  - CSV templates can share the # æ³¨é‡Šé¦–è¡Œ + æ­£å¼è¡¨å¤´ç¬¬äºŒè¡Œ convention safely because the parser now ignores comment rows; Markdown/TXT cannot blindly copy that rule because their protocol starts with frontmatter markers.
+  - CSV templates can share the # ×¢ÊÍÊ×ĞĞ + ÕıÊ½±íÍ·µÚ¶şĞĞ convention safely because the parser now ignores comment rows; Markdown/TXT cannot blindly copy that rule because their protocol starts with frontmatter markers.
 ## 2026-03-18 (markdown/txt template help blocks)
 - Changed files + intent:
   - duoxx/components/admin/OperatorWorkbench.tsx: added Chinese help/comment blocks to Markdown and TXT import templates without breaking their frontmatter-based protocol; sentence CSV template was also aligned to the comment-row convention.
@@ -2381,10 +2426,10 @@
   - `cmd /c npm test -- src/services/__tests__/adminImportWizard.test.ts --runInBand` passed (13/13).
 - Next steps / open questions:
   - Backend `import-jobs` routes need to adopt the same v3 preview payload and validation fields for full end-to-end parity.
-  - Import UI can further add inline éˆ¥æ¸ump to first blocking issueéˆ¥?and row-level issue filtering for large files.
+  - Import UI can further add inline â€œjump to first blocking issueâ€?and row-level issue filtering for large files.
 ## 2026-03-18 (import v3 stabilization: OperatorWorkbench unicode labels + type refs)
 - Changed files + intent:
-  - duoxx/components/admin/OperatorWorkbench.tsx: imported missing WordKnowledgeEntryPreview / WordSensePreview types used by sense editor callbacks; fixed five metadata labels that were rendered as literal \\uXXXX to real Chinese (é‚å›¦æ¬¢/é‚å›¦æ¬¢ç»«è¯²ç€·/é‰ãƒ¦ç°®ç»«è¯²ç€·/ç‘™ï½†ç€½é£?é˜èˆµâ‚¬?.
+  - duoxx/components/admin/OperatorWorkbench.tsx: imported missing WordKnowledgeEntryPreview / WordSensePreview types used by sense editor callbacks; fixed five metadata labels that were rendered as literal \\uXXXX to real Chinese (æ–‡ä»¶/æ–‡ä»¶ç±»å‹/æ¥æºç±»å‹/è§£æå™?çŠ¶æ€?.
 - Learned:
   - JSX text nodes containing escaped unicode must not be double-escaped; otherwise UI prints raw \\u sequences.
   - Current repo has many pre-existing TS errors outside import flow; targeted lint/test for import module remains green.
@@ -2549,7 +2594,7 @@
   - Continue with backend `asset-packages` persistence so V4 asset publish is no longer local-preview-only.
 ## 2026-03-19 (V4 slot validation + parse-gated review)
 - Changed files + intent:
-  - `duoxx/components/admin/LexicalAssetImportPanel.tsx`: refined the V4 import flow so global `é”™è¯¯ä¸æ ¡éªŒ` only appears after `å¼€å§‹è§£æ`; moved each CSV template button into its own upload slot; slot badges now switch from `å¿…éœ€/å¯é€‰` to `å·²ä¸Šä¼ /é”™è¯¯`; per-slot header errors are shown immediately after file selection; fixed slot inspection call order and parse-state reset behavior.
+  - `duoxx/components/admin/LexicalAssetImportPanel.tsx`: refined the V4 import flow so global `´íÎóÓëĞ£Ñé` only appears after `¿ªÊ¼½âÎö`; moved each CSV template button into its own upload slot; slot badges now switch from `±ØĞè/¿ÉÑ¡` to `ÒÑÉÏ´«/´íÎó`; per-slot header errors are shown immediately after file selection; fixed slot inspection call order and parse-state reset behavior.
   - `duoxx/src/services/lexicalAssetImport.ts`: added `inspectLexicalAssetUploadFile()` for immediate per-file contract checking before full package parse.
   - `duoxx/src/services/__tests__/lexicalAssetImport.test.ts`: added coverage for immediate slot inspection and wrong-file-in-forced-slot detection.
 - Learned:
@@ -2563,12 +2608,12 @@
   - Consider adding file-name mismatch warnings when a known `examples.csv` filename is intentionally placed into the `senses` slot, even if the user clicks that slot manually.
 ## 2026-03-19 (V4 upload slots: immediate file checks + parse-gated validation)
 - Changed files + intent:
-  - `duoxx/components/admin/LexicalAssetImportPanel.tsx`: changed V4 slot behavior so file-level feedback happens immediately on upload, while the global `é”™è¯¯ä¸æ ¡éªŒ` section stays hidden until `å¼€å§‹è§£æ`; moved each CSV template button into its corresponding upload slot; changed slot badges from `å¿…éœ€/å¯é€‰` to runtime state (`å·²ä¸Šä¼ ` / `æœ‰é”™è¯¯`) after selection; reset stale parse preview state when files change.
+  - `duoxx/components/admin/LexicalAssetImportPanel.tsx`: changed V4 slot behavior so file-level feedback happens immediately on upload, while the global `´íÎóÓëĞ£Ñé` section stays hidden until `¿ªÊ¼½âÎö`; moved each CSV template button into its corresponding upload slot; changed slot badges from `±ØĞè/¿ÉÑ¡` to runtime state (`ÒÑÉÏ´«` / `ÓĞ´íÎó`) after selection; reset stale parse preview state when files change.
   - `duoxx/src/services/lexicalAssetImport.ts`: formalized single-file slot inspection with header/empty-file checks so operators can detect wrong-file or wrong-header issues before full package parse.
   - `duoxx/src/services/__tests__/lexicalAssetImport.test.ts`: added coverage for immediate slot inspection and forced-slot wrong-file detection.
 - Learned:
   - There are two distinct validation layers in V4 and they must stay visually separate: upload-time slot inspection (cheap, local, per file) and parse-time package validation (cross-file, entry/sense/example graph aware).
-  - The screenshot root cause is mostly UX, not parser correctness: when a user drops `examples.csv` into the `senses` slot, the current parser correctly reports `SENSE_HEADERS_INVALID`, but the UI previously delayed useful feedback and kept misleading `å¿…éœ€` badges.
+  - The screenshot root cause is mostly UX, not parser correctness: when a user drops `examples.csv` into the `senses` slot, the current parser correctly reports `SENSE_HEADERS_INVALID`, but the UI previously delayed useful feedback and kept misleading `±ØĞè` badges.
 - Verification:
   - `cmd /c .\duoxx\node_modules\.bin\tsc -p duoxx\tsconfig.json --noEmit --pretty false 2>&1 | findstr /I /C:"LexicalAssetImportPanel.tsx" /C:"lexicalAssetImport.ts" /C:"lexicalAssetImport.test.ts" /C:"adminLexicalAssetV4.ts"` produced no matched errors for touched files.
   - `cmd /c npm --prefix duoxx test -- src/services/__tests__/lexicalAssetImport.test.ts --runInBand` passed (10/10).
@@ -2577,7 +2622,7 @@
   - Continue backend `asset-packages` persistence so V4 publish no longer depends on local preview state.
 ## 2026-03-19 (V4 grouped sense preview + edit-on-demand)
 - Changed files + intent:
-  - `duoxx/components/admin/LexicalAssetImportPanel.tsx`: flattened the standard asset preview so the right pane reads as `entry -> sense -> examples`; each sense now shows POS and translation as a grouped review unit, examples stay directly under that sense, and entry/sense/example editors only expand on explicit `ç¼–è¾‘` clicks instead of rendering open inputs by default.
+  - `duoxx/components/admin/LexicalAssetImportPanel.tsx`: flattened the standard asset preview so the right pane reads as `entry -> sense -> examples`; each sense now shows POS and translation as a grouped review unit, examples stay directly under that sense, and entry/sense/example editors only expand on explicit `±à¼­` clicks instead of rendering open inputs by default.
 - Learned:
   - The operator review unit is not a raw asset row but `one word + its senses + the examples attached to each sense`; default-open editors hide that structure and waste height.
   - For admin pages, separating `preview` from `edit` is more effective than adding more visual containers.
@@ -2586,7 +2631,7 @@
   - `cmd /c npm --prefix duoxx test -- src/services/__tests__/lexicalAssetImport.test.ts --runInBand` passed (10/10).
 - Next steps / open questions:
   - Run a browser smoke pass on `/admin/pipeline` to verify the grouped POS/translation/example layout reads cleanly on real web width.
-  - Rename `å‘å¸ƒä¸ä¸‹æ¸¸ç”Ÿæˆ` to a more operator-facing label after the workflow wording is finalized.
+  - Rename `·¢²¼ÓëÏÂÓÎÉú³É` to a more operator-facing label after the workflow wording is finalized.
 ## 2026-03-19 (V4 lexical facets + de-duplicated entry detail)
 - Changed files + intent:
   - `duoxx/src/services/lexicalAssetImport.ts`: extended entry metadata so V4 standard assets can carry word-level rendering facets from `entries.csv` (`phrases`, `collocations`, `idioms`, `slang`, `spokenExpressions`) instead of forcing the UI to invent empty sections.
@@ -2611,7 +2656,7 @@
   - `duoxx/src/services/__tests__/lexicalSingleFileImport.test.ts`: added parser coverage for Markdown, TXT, CSV aggregation, missing CSV headers, and missing-example validation.
 - Learned:
   - The operator review unit is `one word and everything under it`; any UI that exposes `entries/senses/examples` as first-class visible columns becomes technical and hard to use.
-  - For this admin flow, the correct simplification is not éˆ¥æ¸‡ewer buttons on the same data modeléˆ¥?but éˆ¥æ¸™ne upload contract + one review shape + no downstream generation in the main page.éˆ¥?- Verification:
+  - For this admin flow, the correct simplification is not â€œfewer buttons on the same data modelâ€?but â€œone upload contract + one review shape + no downstream generation in the main page.â€?- Verification:
   - `cmd /c .\duoxx\node_modules\.bin\tsc -p duoxx\tsconfig.json --noEmit --pretty false 2>&1 | findstr /I /C:"LexicalAssetImportPanel.tsx" /C:"lexicalSingleFileImport.ts" /C:"lexicalSingleFileImport.test.ts" /C:"adminLexicalSingleFile.ts" /C:"OperatorWorkbench.tsx"` produced no matched errors for the touched files. `findstr` returned `1` because there were no matching error lines.
   - `cmd /c npm --prefix duoxx test -- src/services/__tests__/lexicalSingleFileImport.test.ts --runInBand` passed (5/5).
 - Next steps / open questions:
@@ -2619,20 +2664,20 @@
   - Remove or archive the now-dead V4 import service/UI code paths after confirming nothing else still depends on them.
 - 2026-03-19 (V5 error filter empty-state fix)
   - Changed: `duoxx/components/admin/LexicalAssetImportPanel.tsx`.
-  - Intent: fix the review-pane bug where filtering by `éˆå¤æ•Šç’‡ç— with zero matching entries still fell back to showing the first word (`run`) on the right; the panel now shows an explicit empty state instead of a false selection.
+  - Intent: fix the review-pane bug where filtering by `æœ‰é”™è¯¯` with zero matching entries still fell back to showing the first word (`run`) on the right; the panel now shows an explicit empty state instead of a false selection.
   - Verification: targeted `tsc` grep for `LexicalAssetImportPanel.tsx` produced no matched errors; `npm --prefix duoxx test -- src/services/__tests__/lexicalSingleFileImport.test.ts --runInBand` passed (5/5).
 - 2026-03-19 (V5 top-row compact review layout)
   - Changed: `duoxx/components/admin/LexicalAssetImportPanel.tsx`.
-  - Intent: place `ç’‡å¶†çœ¹ç’§å‹ªéª‡ç€µç…å†æ¶“åº¡î…¸é—ƒå„ and `ç‘™ï½†ç€½é–¿æ¬’î‡¤æ¶“åº¢å½ç»€ç¯³ on the same row after parsing to reduce vertical waste; left side stays primary, right side shows parse issues without taking a full extra section.
+  - Intent: place `è¯æ±‡èµ„äº§å¯¼å…¥ä¸å®¡é˜…` and `è§£æé”™è¯¯ä¸æç¤º` on the same row after parsing to reduce vertical waste; left side stays primary, right side shows parse issues without taking a full extra section.
   - Learned: for this page, top-level layout should be single-column before parse and compact two-column after parse; leaving errors in a full-width second block wastes height.
   - Verification: targeted `tsc` grep for `LexicalAssetImportPanel.tsx` produced no matched errors.
 - 2026-03-20 (V5 filter label clarification)
   - Changed: `duoxx/src/config/adminLexicalSingleFile.ts`.
-  - Intent: rename the left-rail filter label from `é™îˆšî…¸é—ƒå„ to `éƒçŠ»æ•Šç’‡ç— so it matches the actual logic (`issueCount === 0`) and avoids workflow ambiguity for operators.
+  - Intent: rename the left-rail filter label from `å¯å®¡é˜…` to `æ— é”™è¯¯` so it matches the actual logic (`issueCount === 0`) and avoids workflow ambiguity for operators.
   - Verification: targeted `tsc` grep for `adminLexicalSingleFile.ts` / `LexicalAssetImportPanel.tsx` produced no matched errors.
 - 2026-03-20 (V5 translated lexical facets)
   - Changed: `duoxx/src/services/lexicalSingleFileImport.ts`, `duoxx/src/config/adminLexicalSingleFile.ts`, `duoxx/components/admin/LexicalAssetImportPanel.tsx`, `duoxx/src/services/__tests__/lexicalSingleFileImport.test.ts`.
-  - Intent: upgrade lexical facet fields (`phrases`, `collocations`, `sentencePatterns`, `spokenExpressions`, `slang`, `idioms`) from raw string lists to structured `text + translationZh` items, following the agreed `é‘»è¾¨æƒ || æ¶“î…Ÿæƒç¼ˆæ˜ç˜§` protocol instead of burying Chinese glosses inside free text.
+  - Intent: upgrade lexical facet fields (`phrases`, `collocations`, `sentencePatterns`, `spokenExpressions`, `slang`, `idioms`) from raw string lists to structured `text + translationZh` items, following the agreed `è‹±æ–‡ || ä¸­æ–‡ç¿»è¯‘` protocol instead of burying Chinese glosses inside free text.
   - Learned: the right parsing rule is `;;` between items and `||` inside one item; splitting on a bare `|` must stay only as backward-compatible fallback for legacy untranslated lists.
   - Verification: `npm --prefix duoxx test -- src/services/__tests__/lexicalSingleFileImport.test.ts --runInBand` passed (5/5). Targeted `tsc` grep for the touched files produced no matched error lines; `findstr` returned `1` only because there were no matches.
 - 2026-03-20 (Operator Review Hub duplicate title removal)
@@ -2678,7 +2723,7 @@
   - The earlier empty Mongo symptom is operationally indistinguishable from a silent local fallback unless the UI exposes storage source.
   - Exercise Review mojibake was a display-layer/source-copy problem; keeping all operator copy in a dedicated config is the safer pattern.
 - Next steps / open questions:
-  - Have the operator repeat `ä¿å­˜èµ„äº§ä¸ä¿åº•é¢˜` after backend restart and verify the status line says backend Mongo.
+  - Have the operator repeat `±£´æ×Ê²úÓë±£µ×Ìâ` after backend restart and verify the status line says backend Mongo.
   - If item content still looks garbled after the panel fix, inspect and clean old imported quiz records rather than the panel code.
 
 ## 2026-03-20 (lexical quiz API route correction + import tab session restore)
@@ -2697,7 +2742,7 @@
 
 ## 2026-03-20 (Import & Review left list density pass)
 - What changed:
-  - Compressed the left-hand lexical entry list in `LexicalAssetImportPanel.tsx` by moving `ç’‡å¶†â‚¬îœ¾ | æ¸šå¬ªå½x` onto the title row and reducing item padding/margins.
+  - Compressed the left-hand lexical entry list in `LexicalAssetImportPanel.tsx` by moving `è¯æ€§x | ä¾‹å¥x` onto the title row and reducing item padding/margins.
   - Kept the layout flat and left all parsing/saving behavior unchanged.
 - What was learned:
   - The left rail was duplicating summary information that already exists in the right detail pane, which made the review list taller than necessary.
@@ -2705,7 +2750,7 @@
   - If the operator still wants denser scanning, tighten the lemma line spacing next and consider reducing the badge footprint.
 ## 2026-03-20 (Import review list density pass)
 - What changed:
-  - Updated `duoxx/components/admin/LexicalAssetImportPanel.tsx` so each word row shows `è¯æ€§ x | ä¾‹å¥ x` inline with the headword.
+  - Updated `duoxx/components/admin/LexicalAssetImportPanel.tsx` so each word row shows `´ÊĞÔ x | Àı¾ä x` inline with the headword.
   - Reduced left-rail row spacing to save vertical space in `Import & Review`.
 - What was learned:
   - The operator primarily scans word rows for density, not cards; moving counts onto the title row removes one full line per item.
@@ -2713,8 +2758,8 @@
   - Confirm in-browser whether very long headwords or count labels need truncation instead of wrap.
 ## 2026-03-20 (lexical quiz review remove seed/fallback concept from UI)
 - What changed:
-  - Updated `duoxx/components/admin/LexicalAssetImportPanel.tsx` to remove the visible `ä¿åº•é¢˜` concept from the import flow.
-  - Renamed the primary action to `ä¿å­˜èµ„äº§`, removed the seed quiz count display, and simplified status text to only describe asset saving and stale-marking.
+  - Updated `duoxx/components/admin/LexicalAssetImportPanel.tsx` to remove the visible `±£µ×Ìâ` concept from the import flow.
+  - Renamed the primary action to `±£´æ×Ê²ú`, removed the seed quiz count display, and simplified status text to only describe asset saving and stale-marking.
   - Updated `duoxx/components/admin/LexicalQuizReviewPanel.tsx` to remove the `seed` review view filter and hide seed-specific generation reason/promotion text in the detail pane.
   - Updated `duoxx/src/config/adminLexicalQuizReview.ts` to drop seed-related review labels and the promotion prefix from UI copy.
 - What was learned:
@@ -2725,8 +2770,101 @@
 - What changed:
   - Tightened `duoxx/components/admin/LexicalQuizReviewPanel.tsx` row spacing and reduced section padding to make the left grouped list denser.
   - Normalized display labels so pipe-delimited fragments like `| v1` no longer leak into the UI.
-  - Updated `duoxx/src/config/adminLexicalQuizReview.ts` to add missing selection/help labels and rename active-state wording to `è¤°æ’³å¢ æ£°æ¦’ / `å®¸å‰æµ›é¹î•†.
+  - Updated `duoxx/src/config/adminLexicalQuizReview.ts` to add missing selection/help labels and rename active-state wording to `å½“å‰é¢˜` / `å·²æ›¿æ¢`.
 - What was learned:
   - The review panel can stay versioned internally while presenting a question-centric operator UI.
 - Next steps / open questions:
   - Browser smoke test the compact list with real imported assets and adjust only if long labels wrap too aggressively.
+
+## 2026-03-20 (learning-side active lexical quiz adapter)
+- What changed:
+  - Added `duoxx/src/services/lexicalQuizLessonAdapter.ts` plus `duoxx/src/services/__tests__/lexicalQuizLessonAdapter.test.ts` to convert active lexical quiz records into `LessonEngine`-compatible lesson/exercise data.
+  - Extended `duoxx/src/services/learningApi.ts` with `getActiveLexicalQuizzes`.
+  - Updated `duoxx/app/lesson-exercise/[lessonId].tsx` so vocab lesson routes try active lexical quizzes first, then safely fall back to the existing lesson payload if none are usable.
+- What was learned:
+  - The lowest-risk learner-side integration is to treat active lexical quizzes as another lesson data source instead of rewriting `LessonEngine` or the exercise render path.
+  - `multiple_choice` and `true_false` can be adapted immediately; `word_card` needs a separate interaction decision rather than being shoved through the current renderer.
+- Verification:
+  - `npm --prefix duoxx test -- src/services/__tests__/lexicalQuizLessonAdapter.test.ts --runInBand` passed (3/3).
+  - `npm --prefix duoxx test -- src/services/__tests__/lexicalSingleFileImport.test.ts --runInBand` passed (7/7).
+  - `npm --prefix duoxx test -- src/storage/__tests__/lexicalQuizReviewStorage.test.ts --runInBand` passed (4/4).
+  - Targeted `tsc` grep for `lesson-exercise/[lessonId].tsx`, `learningApi.ts`, `lexicalQuizLessonAdapter.ts`, and `lexicalQuizLessonAdapter.test.ts` produced no matched error lines.
+- Next steps / open questions:
+  - Decide whether to support `word_card` on the learner side or disallow marking it as current until a renderer exists.
+  - Do one real browser smoke test with an active lexical multiple-choice item to confirm the lesson route now surfaces reviewed Mongo-backed questions.
+
+## 2026-03-20 (learning-side word_card support via adapter)
+- What changed:
+  - Extended `duoxx/src/services/lexicalQuizLessonAdapter.ts` so `word_card` active quizzes are now adapted into learner-side multiple-choice meaning questions.
+  - Updated `duoxx/src/services/__tests__/lexicalQuizLessonAdapter.test.ts` to cover `word_card` mapping and fallback behavior.
+- What was learned:
+  - The fastest safe path is to treat `word_card` as a meaning-recognition multiple-choice item in the learner, instead of introducing a new renderer midstream.
+  - This keeps the active lexical quiz path unified under the existing `MultipleChoiceExercise` component.
+- Verification:
+  - `npm --prefix duoxx test -- src/services/__tests__/lexicalQuizLessonAdapter.test.ts --runInBand` passed (4/4).
+  - `npm --prefix duoxx test -- src/services/__tests__/lexicalSingleFileImport.test.ts --runInBand` passed (7/7).
+  - `npm --prefix duoxx test -- src/storage/__tests__/lexicalQuizReviewStorage.test.ts --runInBand` passed (4/4).
+  - Targeted `tsc` grep for `lesson-exercise/[lessonId].tsx`, `learningApi.ts`, `lexicalQuizLessonAdapter.ts`, and `lexicalQuizLessonAdapter.test.ts` produced no matched error lines.
+- Next steps / open questions:
+  - Decide whether this `word_card -> multiple_choice` mapping is the final UX or just a temporary bridge before a dedicated flashcard interaction.
+
+## 2026-03-20 (lexical quiz V2: knowledge-only templates + translation_choice as formal type)
+- What changed:
+  - Rewrote `duoxx/src/config/adminLexicalSingleFile.ts` so the official Markdown/TXT/CSV templates now only demonstrate knowledge assets and no longer encourage hand-written quiz blocks.
+  - Rewrote `duoxx/components/admin/LexicalAssetImportPanel.tsx` into a clean UTF-8 version, removed attached-quiz rendering from the review UI, and kept the page focused on lexical asset reading plus asset save feedback.
+  - Updated `duoxx/src/models/lexicalQuiz.ts`, `duoxx/src/storage/lexicalQuizReviewStorage.ts`, `duoxx/components/admin/LexicalQuizReviewPanel.tsx`, `duoxx/src/config/adminLexicalQuizReview.ts`, `duoxx/src/services/lexicalQuizLessonAdapter.ts`, and the matching tests so `translation_choice` is now the formal generated word-meaning exercise type; new generation no longer emits `word_card`.
+  - Updated backend generation logic in `duoxx_server/src/services/lexicalQuizService.js` so new lexical question generation produces `translation_choice` with 4-option Chinese translation distractors, and returns a clear error when distractors are insufficient.
+- What was learned:
+  - The cleanest V2 boundary is: templates carry knowledge only; exercises are system-generated around a sense.
+  - Keeping legacy parser support is acceptable as long as the official template and operator UI stop presenting hand-written quiz as the primary workflow.
+  - `translation_choice` can reuse the existing multiple-choice learner renderer without introducing a new front-end exercise component.
+- Verification:
+  - `npm --prefix duoxx test -- src/services/__tests__/lexicalQuizLessonAdapter.test.ts --runInBand` passed (4/4).
+  - `npm --prefix duoxx test -- src/storage/__tests__/lexicalQuizReviewStorage.test.ts --runInBand` passed (4/4).
+  - `npm --prefix duoxx test -- src/services/__tests__/lexicalSingleFileImport.test.ts --runInBand` passed (7/7).
+  - Targeted `tsc` grep for `LexicalAssetImportPanel.tsx`, `LexicalQuizReviewPanel.tsx`, `adminLexicalSingleFile.ts`, `adminLexicalQuizReview.ts`, `lexicalQuizLessonAdapter.ts`, `lexicalQuizReviewStorage.ts`, `lexicalQuiz.ts`, and the related tests produced no matched error lines.
+  - A direct Node `require` check confirmed `duoxx_server/src/services/lexicalQuizService.js` still exports a callable `generateQuizVersions`.
+- Next steps / open questions:
+  - Run a live browser/Mongo smoke test for the exact V2 flow: import knowledge-only markdown, save assets, generate a translation-choice quiz, approve it, and confirm the learner reads it.
+  - Decide later whether to physically delete legacy quiz parsing from `lexicalSingleFileImport.ts` once old imported files are no longer needed.
+
+## 2026-03-20 (Lexical practice answer-validation investigation)
+- What changed:
+  - Updated `duoxx/src/services/lexicalQuizLessonAdapter.ts` to normalize translation-choice options on read:
+    - legacy `word_card` distractors now ignore non-Chinese answers such as `true/false`
+    - translation-like options are deterministically rotated so the correct answer is not always in slot A
+  - Updated `duoxx/src/storage/lexicalQuizReviewStorage.ts` so newly generated `translation_choice` questions are stored with rotated option order.
+  - Updated backend generation in `duoxx_server/src/services/lexicalQuizService.js` so Mongo-generated `translation_choice` questions use the same rotated option order.
+  - Expanded `duoxx/src/services/__tests__/lexicalQuizLessonAdapter.test.ts` with:
+    - legacy distractor pollution regression coverage
+    - explicit wrong-answer-must-fail coverage
+  - Updated `duoxx/src/storage/__tests__/lexicalQuizReviewStorage.test.ts` to assert generated translation-choice options are no longer answer-first.
+- What was learned:
+  - The user-reported ¡°all answers are correct¡± symptom was not reproducible in the learner screen; browser verification showed wrong answers still fail.
+  - The real root causes were stale lexical option construction rules: polluted legacy distractors and overly predictable answer placement.
+  - Active legacy `word_card` rows already stored in Mongo can still be read safely because the learner adapter now normalizes them at runtime.
+- Next steps / open questions:
+  - Decide whether to run a one-off migration for existing Mongo `translation_choice` / promoted legacy `word_card` records so review-side stored options also match the new order.
+
+## 2026-03-20 (translation-choice distractor quality upgrade)
+- What changed:
+  - Tightened `duoxx_server/src/services/lexicalQuizService.js` and `duoxx/src/storage/lexicalQuizReviewStorage.ts` so translation-choice distractors are now ranked by same part of speech, difficulty proximity, and scene-tag overlap.
+  - Filtered distractors to translation-like Chinese text only; ASCII-only `true/false` style values are excluded from translation-choice pools.
+  - Added backend and local-storage tests that verify the higher-quality distractor selection path.
+- What was learned:
+  - The generator can stay simple at the API boundary while still producing better questions by scoring candidates before option rotation.
+  - Keeping the backend and local fallback aligned avoids a split-brain quiz experience when the API is unavailable.
+- Next steps / open questions:
+  - If older stored quiz rows should be rewritten too, add a separate data cleanup later; do not mix that with the generator rule change.
+
+
+## 2026-03-23 (structured-learning skill/workflow)
+- What changed:
+  - Added `.agents/skills/structured-learning-curator/SKILL.md`.
+  - Added `.agents/workflows/structured-learning-import.md`.
+  - Added `STRUCTURED_LEARNING_CSV_SPEC.md`.
+- What was learned:
+  - Existing import contracts already cover the right database shape for front-end loading.
+  - For mixed CSVs like `15Ìì.csv`, the safest default is one lesson per `category`, with `example` expanded into individual knowledge cards and uncertain rows flagged for review.
+- Next steps / open questions:
+  - If runtime conversion is needed, add a dedicated importer that emits the existing course CSV package format.
