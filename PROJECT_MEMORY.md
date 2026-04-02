@@ -3052,3 +3052,55 @@ ule_not_matched, invalid_sentence_asset) if needed for deeper triage.
 - Next steps / open questions:
   - Integrate offline batch exporter/importer job to produce and ingest full sentence insight packs at scale.
   - Add UI-level integration/e2e coverage for sentence-mode switching under multi-POS and pagination scenarios.
+
+## 2026-04-02 (Lexicon graph pipeline + learning flow landing)
+- What changed:
+  - Implemented lexicon graph backend domain models and service/routing in `duoxx_server`:
+    - added models: `LexiconNode`, `LexiconEdge`, `LexiconImportBatch`, `LexiconSnapshot`, `LexiconUserNodeState`
+    - added service: `src/services/lexiconGraphService.js`
+    - wired routes:
+      - pipeline: `/api/pipeline/lexicon/import-batches`, `/report`, `/relation-candidates`, `/decision`, `/publish`
+      - learning: `/api/learning/graph/node/:id`, `/expand`, `/mastery/mark`, `/recommendations`
+  - Stabilized edge upsert strategy in `lexiconGraphService` to avoid new-batch write collisions on existing edge ids.
+  - Rebuilt admin import panel `duoxx/components/admin/LexicalAssetImportPanel.tsx`:
+    - resilient review-state hydration (defensive normalization, no `undefined.length` crash path)
+    - auto-first import flow: create batch -> load report/candidates -> auto-publish when no pending reviews
+    - minimal manual review actions for candidates: `通过 / 拒绝 / 合并`
+  - Rebuilt learner page `duoxx/app/imported-word-course.tsx` to graph navigation mode:
+    - click expansion item to promote to main node and continue expanding
+    - supports group filters, one-step back, and return-to-root
+    - supports `熟悉/掌握` marking and recommendation refresh linkage
+  - Fixed vocab completion feedback logic:
+    - `duoxx/src/modules/vocab-recognition/screens/VocabExerciseScreen.tsx`: corrected end-of-session param race when quick-marking `熟悉/掌握`
+    - `duoxx/src/modules/vocab-recognition/screens/VocabCompleteScreen.tsx`: switched to composite score (`0.65*accuracy + 0.35*masteryProgress`) and updated result messaging.
+- What was learned:
+  - The “答错较多但标记掌握较多仍给负向文案” problem came from both scoring strategy and final-route state race; only changing copy is insufficient.
+  - Admin import panel reliability depends on strict data normalization for restored local session payloads, not only parser correctness.
+  - Auto-publish can be safely triggered only when pending-review candidates are zero; otherwise strict gate + tri-action review remains necessary.
+- Next steps / open questions:
+  - Add explicit API typings for `lexiconApi` responses to reduce `any`-style casts in UI.
+  - Add e2e smoke path for: import markdown -> create batch -> review one candidate -> publish -> learner graph navigation.
+  - Decide whether to fully retire legacy seed-quiz side-effect from lexical import after graph flow is fully adopted.
+
+## 2026-04-02 (Lexicon API typed contract + route smoke coverage)
+- What changed:
+  - Refactored `duoxx/src/services/lexiconApi.ts` with strict exported interfaces for all lexicon graph APIs:
+    - import batch, batch report, relation candidates, candidate decision, publish
+    - graph node/expand, mastery mark, recommendations
+  - Updated `duoxx/app/imported-word-course.tsx` to consume typed lexicon responses directly (removed response payload casts and `router.push(... as any)`).
+  - Updated `duoxx/components/admin/LexicalAssetImportPanel.tsx` to consume typed lexicon responses directly and removed ad-hoc cast paths in batch/candidate/publish handling.
+  - Added backend smoke test `duoxx_server_link/src/routes/lexiconGraphFlow.test.js` that validates the full operator->learner route loop:
+    - import batch -> relation decision -> publish
+    - learner node read -> expand -> mastery mark -> recommendations
+- What was learned:
+  - Local fallback payloads are slightly wider/looser than backend payloads; API-level type normalization is required in `lexiconApi` (especially expand-node fallback) to keep UI call sites clean.
+  - A stateful route smoke test gives fast regression coverage for orchestration logic even before a real DB-backed e2e test is added.
+- Verification:
+  - Frontend:
+    - `cmd /c npx tsc --noEmit --pretty false` (in `duoxx`) -> pass
+    - `cmd /c npx eslint app/imported-word-course.tsx components/admin/LexicalAssetImportPanel.tsx src/services/lexiconApi.ts --max-warnings=0` -> pass
+  - Backend:
+    - `wsl -e bash -lc "cd /home/rookie/project/duoxx_server && npm test -- src/routes/pipeline.test.js src/routes/learning.test.js src/routes/lexiconGraphFlow.test.js --runInBand"` -> pass (3 suites / 14 tests)
+- Next steps / open questions:
+  - Add one DB-backed integration check for strict gate pass/block behavior to complement the mocked route smoke test.
+  - Decide migration timing for removing legacy seed-quiz side-effect from lexical import once graph-only flow is confirmed stable.

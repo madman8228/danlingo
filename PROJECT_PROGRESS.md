@@ -302,3 +302,42 @@ Last updated: 2026-03-20
   - 仍缺页面级自动化交互测试（例如切词性后再次进入详解）。
 - Next concrete work item:
   - 接入并跑通外部批处理 insight 包导入 smoke（含 schema+完整性+回溯一致性），再补一条 UI 交互自动化用例覆盖句子主卡往返。
+
+## 2026-04-02 - Lexicon graph auto-first pipeline (strict gate + minimal manual)
+- Current status:
+  - Backend lexicon graph contract and routes are in place for import/review/publish and learning consumption.
+  - Admin `LexicalAssetImportPanel` now supports:
+    - batch creation from parsed lexical review
+    - quality report and pending-candidate retrieval
+    - tri-action candidate decisions (`通过 / 拒绝 / 合并`)
+    - auto-publish when pending candidates are zero
+  - Learner `imported-word-course` now supports graph-style navigation:
+    - expansion click promotes target to main node
+    - grouped expansion browsing, back navigation, return-to-root
+    - `熟悉/掌握` marking and recommendation refresh
+  - Vocab completion scoring now uses composite score:
+    - `final_score = 0.65*answer_accuracy + 0.35*mastery_progress`
+    - quick-mark finish-state race is fixed, avoiding stale completion params.
+- Blocked / not yet done:
+  - Frontend `lexiconApi` still returns loosely typed payloads in several call sites.
+  - No full e2e regression test yet for the complete lexicon graph operator->learner chain.
+  - Legacy lexical seed-quiz import side-effect is still retained as compatibility behavior.
+- Next concrete work item:
+  - Add end-to-end smoke/e2e case for: import -> candidate decision -> publish -> learner graph expand/mark/recommend loop.
+  - Add strict TS response interfaces for lexicon APIs and remove ad-hoc casts from UI.
+  - Evaluate removal plan for legacy seed-quiz side-effect once graph flow is stable in production-like usage.
+
+## 2026-04-02 - Lexicon API strict typing + route smoke loop
+- Current status:
+  - `duoxx/src/services/lexiconApi.ts` now exports explicit contract types for import/report/candidate/publish/graph/mark/recommend payloads.
+  - `duoxx/app/imported-word-course.tsx` and `duoxx/components/admin/LexicalAssetImportPanel.tsx` now consume typed responses directly and removed ad-hoc response casts.
+  - Added backend route smoke test `duoxx_server_link/src/routes/lexiconGraphFlow.test.js` covering:
+    - import batch -> candidate review -> publish
+    - learner graph node/expand read
+    - mastery mark + recommendation refresh
+- Blocked / not yet done:
+  - This smoke test validates route orchestration with stateful service mocks; it is not a real DB-integrated e2e yet.
+  - Legacy seed-quiz side-effect (`pipelineApi.importSeedQuizzesFromLexicalReview`) is still retained for compatibility.
+- Next concrete work item:
+  - Add one DB-backed integration test (or staging smoke script) for strict gate behavior with real persisted edges/nodes.
+  - Plan and execute removal of legacy seed-quiz side-effect after confirming graph-only operator flow in production-like usage.
