@@ -13,13 +13,21 @@ DuoXX is a gamified language learning app built with Expo and React Native. It f
 - Property-based testing with fast-check
 
 
-Long-term memory
+## Long-Term Memory (Mandatory)
 - Update `PROJECT_MEMORY.md` after each session:
   - What changed (files + intent)
   - What was learned (architecture/behavior)
   - Next steps / open questions
 - Keep the memory file concise and current.
 - Update `PROJECT_PROGRESS.md` after each completed task so the current implementation status stays visible without reading the whole session log.
+
+## Rule Priority (Mandatory)
+- If rules conflict, follow this priority:
+  1) Constitutions (Admin UI, Product/Data, Development-Phase)
+  2) Closed-Loop Autopilot Protocol
+  3) Style examples/snippets
+- Development-stage default is architecture-first: do not use workaround/fallback paths as a substitute for fixing root design issues.
+- Exception path (rare): if a temporary mitigation is unavoidable for a blocker, document scope, owner, and removal date in task notes before merge.
 
 ## Closed-Loop Autopilot Protocol (Default)
 
@@ -49,18 +57,13 @@ When the user gives a task, run this default execution flow unless the user asks
 - Include known risks and concrete next-step options only when needed.
 
 6. Session persistence
-- Update `PROJECT_MEMORY.md` at end of each session with:
-  - files changed + intent
-  - architecture/behavior learned
-  - next steps/open questions
-- Update `PROJECT_PROGRESS.md` at end of each completed task with:
-  - current feature status
-  - what is blocked / not yet done
-  - the next concrete work item
+- Follow `Long-Term Memory (Mandatory)` exactly.
 
 Reference: `AUTOPILOT_WORKFLOW.md`
 
 ## Build Commands
+
+All commands below are expected to run in `duoxx/` unless explicitly stated otherwise.
 
 ### Development
 - `npm start` - Start Expo development server
@@ -256,17 +259,24 @@ describe('Module Name', () => {
 - Contract-first publishing: data must satisfy exercise contract before entering DB; reject invalid rows in lint/import.
 - Fill-in-the-blank must be structured: avoid plain marker-dependent strings as the only source of truth.
 
+### Development-Phase Constitution (Mandatory)
+- Current stage default: active development. Do not optimize for minimal diff if it harms architecture quality.
+- Architecture and code simplicity first: prefer clean boundaries and readable code over short-term patching.
+- No debt by default: do not introduce temporary structures that are expected to become long-term burden.
+- No workaround/fallback padding by default: do not add "just-in-case" guard paths that hide root-cause issues during development.
+- Fix the model, not the symptom: if current structure is wrong, refactor toward the correct design instead of layering compensating logic.
+
 ### File Organization
 ```
 src/
-├── components/     # Reusable UI components
-├── models/        # TypeScript interfaces and types
-├── services/      # Business logic and state management
-├── validators/    # Input validation functions
-├── storage/       # Data persistence layer
-├── data/         # Static data and course content
-├── hooks/        # Custom React hooks
-└── constants/    # App constants and themes
+|- components/     # Reusable UI components
+|- models/         # TypeScript interfaces and types
+|- services/       # Business logic and state management
+|- validators/     # Input validation functions
+|- storage/        # Data persistence layer
+|- data/           # Static data and course content
+|- hooks/          # Custom React hooks
+`- constants/      # App constants and themes
 ```
 
 ### Comments and Documentation

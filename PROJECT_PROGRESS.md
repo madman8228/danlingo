@@ -272,3 +272,33 @@ Last updated: 2026-03-20
   - Full-app test suite was not run in this pass; verification was targeted to changed modules.
 - Next concrete work item:
   - Run broader smoke/QA on primary learner flows and admin pipeline flow to confirm no runtime UI regressions after cleanup.
+
+## 2026-04-02 - AGENTS constitution update (development-first engineering rules)
+- Current status:
+  - Added `Development-Phase Constitution (Mandatory)` in `AGENTS.md`.
+  - New guardrails: architecture/code clarity first, no minimal-diff bias, no workaround/fallback padding in default development work.
+- Blocked / not yet done:
+  - Policy is documented, but no automated enforcement tooling is configured.
+- Next concrete work item:
+  - Apply the new constitution in the next implementation task and reject workaround-style proposals by default.
+
+## 2026-04-02 - AGENTS.md quality pass (clarity and enforceability)
+- Current status:
+  - AGENTS.md was structurally optimized for developer-agent execution.
+  - Added explicit rule priority, removed duplicated session-persistence wording, and clarified that commands run under duoxx/ by default.
+  - Replaced the file-organization tree with ASCII-safe formatting.
+- Blocked / not yet done:
+  - No automated lint/check exists yet to validate AGENTS policy consistency.
+- Next concrete work item:
+  - In next workflow update, optionally add a lightweight AGENTS consistency checklist script.
+## 2026-04-02 - Sentence Insight Pack V1落地（离线包消费 + 句子主卡）
+- Current status:
+  - 已完成 V1 数据契约与发布门禁：核心 4 模块缺失会被校验拦截。
+  - 已完成知识吸收引擎句子映射：例句可通过 `sentenceId/exampleKey` 精确命中 insight 包。
+  - 已完成知识吸收页交互：有包才显示“详解”，点击后切句子主卡并支持“返回原词”。
+  - 已完成模块化抽屉渲染：句子模式按模块注册表渲染，不依赖写死分支。
+- Blocked / not yet done:
+  - 仍缺离线批处理导入任务的端到端串联验证（大批量真实包）。
+  - 仍缺页面级自动化交互测试（例如切词性后再次进入详解）。
+- Next concrete work item:
+  - 接入并跑通外部批处理 insight 包导入 smoke（含 schema+完整性+回溯一致性），再补一条 UI 交互自动化用例覆盖句子主卡往返。

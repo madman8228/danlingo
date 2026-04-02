@@ -3007,3 +3007,48 @@ ule_not_matched, invalid_sentence_asset) if needed for deeper triage.
   - `cmd /c npx jest ... --runInBand` (4 targeted suites) -> pass.
 - Next steps / open questions:
   - Run a broader learner-flow smoke path (home -> module -> submit -> feedback) and admin pipeline smoke path to catch any UI text/encoding regressions not covered by tests.
+## 2026-04-02 (Add development-phase constitution)
+- What changed:
+  - Updated `AGENTS.md` by adding `Development-Phase Constitution (Mandatory)`.
+  - Added explicit rules: avoid minimal-diff bias, avoid workaround/fallback padding, prioritize architecture correctness and code simplicity.
+- What was learned:
+  - The project now explicitly requires development-phase decisions to favor clean architecture over short-term patches.
+- Next steps / open questions:
+  - Apply this constitution consistently in upcoming implementation tasks.
+## 2026-04-02 (AGENTS.md structure optimization)
+- What changed:
+  - Optimized AGENTS.md structure for execution clarity.
+  - Promoted Long-Term Memory to a mandatory heading and removed duplicated persistence details from protocol step 6.
+  - Added Rule Priority (Mandatory) to resolve rule conflicts deterministically.
+  - Clarified command execution scope: build/test commands run in duoxx/ by default.
+  - Replaced the file-organization tree with an ASCII-safe version to avoid encoding artifacts.
+- What was learned:
+  - The previous document had small but meaningful execution friction (duplicate rules, missing precedence, and directory ambiguity).
+- Next steps / open questions:
+  - Keep this structure stable and only evolve constitutions via explicit rule updates.
+## 2026-04-02 (Sentence Insight Pack V1: schema + index + UI sentence mode)
+- What changed:
+  - Implemented Sentence Insight Pack V1 contract and validation gate in `duoxx/src/services/lexicalSingleFileImport.ts`:
+    - Added `SentenceInsightPackV1` model family and required-module gate (`structure`, `chunks`, `grammarPoints`, `collocations`).
+    - Added deterministic `sentenceId` generation (`buildStableSentenceId`) and pack validator (`validateSentenceInsightPackV1`).
+  - Implemented sentence insight indexing and sentence-mode resolution in `duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts`:
+    - Added module registry ordering and sentence insight index build/read APIs.
+    - Added sentence lookup maps (`sentenceNodeIdBySentenceId`, `sentenceNodeIdByExampleKey`) and resolver for example->sentence jump.
+    - Extended word example presentation with `exampleKey` + `sentenceId` for front-end triggering.
+  - Implemented knowledge absorb sentence-detail interaction in `duoxx/app/knowledge-absorb.tsx`:
+    - Added per-example `详解` action (only shown when insight pack exists).
+    - Added sentence-mode main card switch and `返回原词` anchor behavior.
+    - Added module-tab drawer rendering driven by registry, with no client-side fallback assembly.
+  - Restored and hardened targeted tests:
+    - `duoxx/src/services/__tests__/lexicalSingleFileImport.test.ts`
+    - `duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts`
+- What was learned:
+  - The `sentenceId = normalize(sentence) + sourceSenseKey` stable hash path is sufficient to bridge offline insight packs and in-app sentence nodes without new storage workarounds.
+  - Registry-driven module rendering cleanly isolates future module growth from page-state logic.
+- Verification:
+  - `npx eslint app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts src/services/__tests__/lexicalSingleFileImport.test.ts --max-warnings=0` -> pass.
+  - `npm test -- src/services/__tests__/lexicalSingleFileImport.test.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts` -> pass (18 tests).
+  - `npx tsc --noEmit` -> pass.
+- Next steps / open questions:
+  - Integrate offline batch exporter/importer job to produce and ingest full sentence insight packs at scale.
+  - Add UI-level integration/e2e coverage for sentence-mode switching under multi-POS and pagination scenarios.
