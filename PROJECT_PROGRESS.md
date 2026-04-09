@@ -1422,3 +1422,17 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
 - Verification:
   - npm run lint -- app/knowledge-absorb.tsx
   - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json
+## 2026-04-09 - Knowledge absorb expansion groups restored (recall fallback rebalance)
+- Current status:
+  - Expansion groups no longer rely on same-entry/same-sense-only recall.
+  - Direct facet links remain primary, with overlap-threshold fallback to recover missing groups such as synonyms/antonyms/spoken/collocations when direct data is sparse.
+- Verification:
+  - npm run lint -- src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts app/knowledge-absorb.tsx
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json
+## 2026-04-09 - Knowledge absorb group tabs restored to single-line visible strip
+- Current status:
+  - Non-sentence expansion area now shows all group tabs in one horizontal row instead of a single active-group title.
+  - Users can directly tap any group tab; active page indicator remains visible.
+- Verification:
+  - npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json

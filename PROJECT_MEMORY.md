@@ -4584,3 +4584,24 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
 - Verification:
   - npm run lint -- app/knowledge-absorb.tsx -> pass.
   - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> pass.
+## 2026-04-09 (Knowledge absorb recall balance: restore missing groups)
+- What changed:
+  - Updated esolveExpansionNodeRefs in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts.
+  - Kept direct facet links as first priority.
+  - Added gated recall fallback using keyword-overlap scoring when direct group items are empty.
+  - For synonyms/antonyms: direct links are preferred; recall is now used only when direct links are empty.
+- What was learned:
+  - Over-constraining recall to same-entry/same-sense can collapse most groups to empty and hurt exploration UX.
+- Verification:
+  - npm run lint -- src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts app/knowledge-absorb.tsx -> pass.
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> pass.
+## 2026-04-09 (Knowledge absorb group header: all groups visible in one row)
+- What changed:
+  - Replaced non-sentence expansion header from single active label view to a one-row group tab strip in duoxx/app/knowledge-absorb.tsx.
+  - All expansion groups are now visible as horizontal tabs at once (scrollable in one line), and tapping a tab switches the active group/page.
+  - Kept current page index indicator (x/7) on the right side.
+- What was learned:
+  - Showing only current group label obscures available dimensions and creates false impression that other groups are missing.
+- Verification:
+  - npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts -> pass.
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> pass.
