@@ -4535,3 +4535,38 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
   - The prior "more examples" toggle path reintroduced UX regression against current interaction decisions.
 - Next steps / open questions:
   - Optional visual QA on device to confirm expansion drawer visibility and swipe affordance behavior.
+
+## 2026-04-09 (Knowledge absorb extension content default-group fix)
+- What changed:
+  - Updated duoxx/app/knowledge-absorb.tsx to precompute expansion items for all groups.
+  - Changed default active group selection from fixed first tab to first non-empty group for the current node/sense.
+  - Kept manual tab switching behavior; content now binds to computed active group items.
+- What was learned:
+  - Defaulting to a fixed group causes false-empty UX when that group is sparse (especially synonyms/antonyms).
+- Next steps / open questions:
+  - Optional: visually disable empty groups or show counts to further reduce empty-state clicks.
+
+## 2026-04-09 (Learning home two-entry layout redesign)
+- What changed:
+  - Rewrote duoxx/app/(tabs)/index.tsx in clean UTF-8.
+  - Student home now uses two large feature panels (Practice / Absorb), side-by-side on wide screens and stacked on narrow screens.
+  - Preserved one-tap practice recommendation start and absorb-mode navigation.
+  - Parent-mode summary/action flow remains unchanged.
+- What was learned:
+  - Full-file rewrite was safer here because prior encoding/noise made patch anchors unstable.
+- Verification:
+  - npx eslint "app/(tabs)/index.tsx" -> pass.
+  - npx tsc --noEmit -> pass.
+- Next steps / open questions:
+  - Runtime visual QA on desktop/mobile breakpoints.
+
+## 2026-04-09 (Knowledge absorb: inline expansion pager refactor)
+- What changed:
+  - Refactored duoxx/app/knowledge-absorb.tsx from bottom floating expansion dock to inline stacked layout: word card first, expansion area directly below, and quick actions at bottom.
+  - Added vertical paged group switching for non-sentence expansion content (one group per page) with momentum index sync to active group state.
+  - Simplified swipe affordance to a compact hint badge and switched expansion item rendering to column rows.
+  - Kept sentence insight module tab behavior intact while sharing the same expansion container.
+- What was learned:
+  - Keeping only one vertical gesture source (group pager) avoids nested-scroll conflicts on mobile and makes the interaction predictable.
+- Next steps / open questions:
+  - Optional: add page dots for group position awareness if users still miss the swipe interaction.

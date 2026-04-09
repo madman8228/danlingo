@@ -1448,3 +1448,31 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
 - Verification:
   - npm run lint -- app/knowledge-absorb.tsx
   - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json
+
+## 2026-04-09 - Knowledge absorb extension default-group fallback fixed
+- Current status:
+  - Extension content now defaults to the first non-empty group for the active card.
+  - Empty default tab issue reduced; users should see extension chips immediately when data exists.
+- Verification:
+  - npm run lint -- app/knowledge-absorb.tsx
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json
+
+## 2026-04-09 - Learning home redesigned to dual large panels (left-right on wide screens)
+- Current status:
+  - Student learning home keeps only two primary entries with larger, cleaner presentation.
+  - Wide layout shows the two entries side-by-side; narrow layout stacks them.
+  - Practice still starts from recommendation engine with fallback route.
+- Verification:
+  - npx eslint "app/(tabs)/index.tsx" -> pass.
+  - npx tsc --noEmit -> pass.
+- Next concrete work item:
+  - Run runtime visual QA and iterate spacing if needed.
+
+## 2026-04-09 - Knowledge absorb: expansion area switched to vertical pager cards
+- Current status:
+  - Expansion knowledge now sits directly below the main word card and uses remaining screen height.
+  - Non-sentence expansion groups switch by vertical paging (one group per page), with compact swipe hint and column-style item rows.
+  - Sentence insight mode remains available and unaffected functionally.
+- Verification:
+  - npm run lint -- app/knowledge-absorb.tsx
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json
