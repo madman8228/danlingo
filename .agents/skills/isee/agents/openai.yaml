@@ -1,0 +1,4 @@
+﻿interface:
+  display_name: "isee"
+  short_description: "Turn user-specified text into constitution rules."
+  default_prompt: "Use $isee to convert the text I provide in this request into concise constitution rules, expand into practical guardrails, preview in terminal, then wait for my confirmation before writing."

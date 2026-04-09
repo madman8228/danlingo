@@ -1,0 +1,2022 @@
+﻿{
+    "summary":  {
+                    "batchId":  "lexbatch_collocations_md_mnip4vf8",
+                    "totalFiles":  7,
+                    "totalEntries":  96,
+                    "nodesTotal":  172,
+                    "edgesTotal":  494,
+                    "unresolvedRefs":  228,
+                    "pendingReview":  83,
+                    "fileSummaries":  [
+                                          {
+                                              "fileName":  "collocations.md",
+                                              "parsedBlocks":  14,
+                                              "skippedBlocks":  0,
+                                              "unresolvedRefs":  3
+                                          },
+                                          {
+                                              "fileName":  "idioms.md",
+                                              "parsedBlocks":  6,
+                                              "skippedBlocks":  0,
+                                              "unresolvedRefs":  2
+                                          },
+                                          {
+                                              "fileName":  "phrases.md",
+                                              "parsedBlocks":  14,
+                                              "skippedBlocks":  0,
+                                              "unresolvedRefs":  4
+                                          },
+                                          {
+                                              "fileName":  "sentencePatterns.md",
+                                              "parsedBlocks":  3,
+                                              "skippedBlocks":  0,
+                                              "unresolvedRefs":  0
+                                          },
+                                          {
+                                              "fileName":  "slang.md",
+                                              "parsedBlocks":  6,
+                                              "skippedBlocks":  0,
+                                              "unresolvedRefs":  2
+                                          },
+                                          {
+                                              "fileName":  "spokenExpressions.md",
+                                              "parsedBlocks":  18,
+                                              "skippedBlocks":  0,
+                                              "unresolvedRefs":  18
+                                          },
+                                          {
+                                              "fileName":  "word.md",
+                                              "parsedBlocks":  36,
+                                              "skippedBlocks":  0,
+                                              "unresolvedRefs":  245
+                                          }
+                                      ],
+                    "unresolvedTopByFile":  [
+                                                {
+                                                    "fileName":  "collocations.md",
+                                                    "topLabels":  [
+                                                                      {
+                                                                          "label":  "inclement weather",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "terrible weather",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "wretched existence",
+                                                                          "count":  1
+                                                                      }
+                                                                  ]
+                                                },
+                                                {
+                                                    "fileName":  "idioms.md",
+                                                    "topLabels":  [
+                                                                      {
+                                                                          "label":  "it\u0027s water under the bridge",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "stress out",
+                                                                          "count":  1
+                                                                      }
+                                                                  ]
+                                                },
+                                                {
+                                                    "fileName":  "phrases.md",
+                                                    "topLabels":  [
+                                                                      {
+                                                                          "label":  "make sb\u0027s life miserable",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "narrow victory",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "push sb to the edge",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "total failure",
+                                                                          "count":  1
+                                                                      }
+                                                                  ]
+                                                },
+                                                {
+                                                    "fileName":  "slang.md",
+                                                    "topLabels":  [
+                                                                      {
+                                                                          "label":  "old fogey",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "pommy",
+                                                                          "count":  1
+                                                                      }
+                                                                  ]
+                                                },
+                                                {
+                                                    "fileName":  "spokenExpressions.md",
+                                                    "topLabels":  [
+                                                                      {
+                                                                          "label":  "\"Cheer up, it\u0027s not that bad!\"",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "\"That\u0027s extensive!\"",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "\"That\u0027s large of you!\"",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "\"That\u0027s so joyful to hear!\"",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "Give me a minute!",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "Happy as a clam!",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "Happy days!",
+                                                                          "count":  1
+                                                                      },
+                                                                      {
+                                                                          "label":  "How big of you!",
+                                                                          "count":  1
+                                                                      }
+                                                                  ]
+                                                },
+                                                {
+                                                    "fileName":  "word.md",
+                                                    "topLabels":  [
+                                                                      {
+                                                                          "label":  "Give me a minute!",
+                                                                          "count":  3
+                                                                      },
+                                                                      {
+                                                                          "label":  "happy ending",
+                                                                          "count":  3
+                                                                      },
+                                                                      {
+                                                                          "label":  "I\u0027m absolutely delighted for you!",
+                                                                          "count":  3
+                                                                      },
+                                                                      {
+                                                                          "label":  "It is + adj. (small) + for sb. to do sth.",
+                                                                          "count":  3
+                                                                      },
+                                                                      {
+                                                                          "label":  "It is + adj. + to do sth. with little + n.",
+                                                                          "count":  3
+                                                                      },
+                                                                      {
+                                                                          "label":  "It will take sb. + 鏃堕棿娈?+ minutes to do sth.",
+                                                                          "count":  3
+                                                                      },
+                                                                      {
+                                                                          "label":  "Little did I know!",
+                                                                          "count":  3
+                                                                      },
+                                                                      {
+                                                                          "label":  "No big deal, it\u0027s just a small mistake.",
+                                                                          "count":  3
+                                                                      }
+                                                                  ]
+                                                }
+                                            ],
+                    "sortedByRisk":  [
+                                         {
+                                             "fileName":  "word.md",
+                                             "parsedBlocks":  36,
+                                             "skippedBlocks":  0,
+                                             "unresolvedRefs":  245
+                                         },
+                                         {
+                                             "fileName":  "spokenExpressions.md",
+                                             "parsedBlocks":  18,
+                                             "skippedBlocks":  0,
+                                             "unresolvedRefs":  18
+                                         },
+                                         {
+                                             "fileName":  "phrases.md",
+                                             "parsedBlocks":  14,
+                                             "skippedBlocks":  0,
+                                             "unresolvedRefs":  4
+                                         },
+                                         {
+                                             "fileName":  "collocations.md",
+                                             "parsedBlocks":  14,
+                                             "skippedBlocks":  0,
+                                             "unresolvedRefs":  3
+                                         },
+                                         {
+                                             "fileName":  "idioms.md",
+                                             "parsedBlocks":  6,
+                                             "skippedBlocks":  0,
+                                             "unresolvedRefs":  2
+                                         },
+                                         {
+                                             "fileName":  "slang.md",
+                                             "parsedBlocks":  6,
+                                             "skippedBlocks":  0,
+                                             "unresolvedRefs":  2
+                                         },
+                                         {
+                                             "fileName":  "sentencePatterns.md",
+                                             "parsedBlocks":  3,
+                                             "skippedBlocks":  0,
+                                             "unresolvedRefs":  0
+                                         }
+                                     ]
+                },
+    "diagnostics":  [
+                        {
+                            "value":  [
+                                          {
+                                              "fileName":  "collocations.md",
+                                              "entries":  14,
+                                              "parsedBlocks":  14,
+                                              "skippedBlocks":  0,
+                                              "errors":  [
+
+                                                         ],
+                                              "warnings":  [
+
+                                                           ]
+                                          },
+                                          {
+                                              "fileName":  "idioms.md",
+                                              "entries":  6,
+                                              "parsedBlocks":  6,
+                                              "skippedBlocks":  0,
+                                              "errors":  [
+
+                                                         ],
+                                              "warnings":  [
+
+                                                           ]
+                                          },
+                                          {
+                                              "fileName":  "phrases.md",
+                                              "entries":  14,
+                                              "parsedBlocks":  14,
+                                              "skippedBlocks":  0,
+                                              "errors":  [
+
+                                                         ],
+                                              "warnings":  [
+
+                                                           ]
+                                          },
+                                          {
+                                              "fileName":  "sentencePatterns.md",
+                                              "entries":  3,
+                                              "parsedBlocks":  3,
+                                              "skippedBlocks":  0,
+                                              "errors":  [
+
+                                                         ],
+                                              "warnings":  [
+
+                                                           ]
+                                          },
+                                          {
+                                              "fileName":  "slang.md",
+                                              "entries":  6,
+                                              "parsedBlocks":  6,
+                                              "skippedBlocks":  0,
+                                              "errors":  [
+
+                                                         ],
+                                              "warnings":  [
+
+                                                           ]
+                                          },
+                                          {
+                                              "fileName":  "spokenExpressions.md",
+                                              "entries":  17,
+                                              "parsedBlocks":  18,
+                                              "skippedBlocks":  0,
+                                              "errors":  [
+
+                                                         ],
+                                              "warnings":  [
+
+                                                           ]
+                                          },
+                                          {
+                                              "fileName":  "word.md",
+                                              "entries":  36,
+                                              "parsedBlocks":  36,
+                                              "skippedBlocks":  0,
+                                              "errors":  [
+
+                                                         ],
+                                              "warnings":  [
+
+                                                           ]
+                                          }
+                                      ],
+                            "Count":  7
+                        }
+                    ],
+    "governance":  {
+                       "batchId":  "lexbatch_collocations_md_mnip55pr",
+                       "totalFiles":  7,
+                       "contract":  {
+                                        "failedFiles":  [
+
+                                                        ],
+                                        "byFile":  [
+                                                       {
+                                                           "fileName":  "collocations.md",
+                                                           "fileType":  "markdown",
+                                                           "entries":  14,
+                                                           "parsedBlocks":  14,
+                                                           "skippedBlocks":  0,
+                                                           "errorCount":  0,
+                                                           "warningCount":  0,
+                                                           "contractPassed":  true,
+                                                           "primaryIssues":  [
+
+                                                                             ]
+                                                       },
+                                                       {
+                                                           "fileName":  "idioms.md",
+                                                           "fileType":  "markdown",
+                                                           "entries":  6,
+                                                           "parsedBlocks":  6,
+                                                           "skippedBlocks":  0,
+                                                           "errorCount":  0,
+                                                           "warningCount":  0,
+                                                           "contractPassed":  true,
+                                                           "primaryIssues":  [
+
+                                                                             ]
+                                                       },
+                                                       {
+                                                           "fileName":  "phrases.md",
+                                                           "fileType":  "markdown",
+                                                           "entries":  14,
+                                                           "parsedBlocks":  14,
+                                                           "skippedBlocks":  0,
+                                                           "errorCount":  0,
+                                                           "warningCount":  0,
+                                                           "contractPassed":  true,
+                                                           "primaryIssues":  [
+
+                                                                             ]
+                                                       },
+                                                       {
+                                                           "fileName":  "sentencePatterns.md",
+                                                           "fileType":  "markdown",
+                                                           "entries":  3,
+                                                           "parsedBlocks":  3,
+                                                           "skippedBlocks":  0,
+                                                           "errorCount":  0,
+                                                           "warningCount":  0,
+                                                           "contractPassed":  true,
+                                                           "primaryIssues":  [
+
+                                                                             ]
+                                                       },
+                                                       {
+                                                           "fileName":  "slang.md",
+                                                           "fileType":  "markdown",
+                                                           "entries":  6,
+                                                           "parsedBlocks":  6,
+                                                           "skippedBlocks":  0,
+                                                           "errorCount":  0,
+                                                           "warningCount":  0,
+                                                           "contractPassed":  true,
+                                                           "primaryIssues":  [
+
+                                                                             ]
+                                                       },
+                                                       {
+                                                           "fileName":  "spokenExpressions.md",
+                                                           "fileType":  "markdown",
+                                                           "entries":  17,
+                                                           "parsedBlocks":  18,
+                                                           "skippedBlocks":  0,
+                                                           "errorCount":  0,
+                                                           "warningCount":  0,
+                                                           "contractPassed":  true,
+                                                           "primaryIssues":  [
+
+                                                                             ]
+                                                       },
+                                                       {
+                                                           "fileName":  "word.md",
+                                                           "fileType":  "markdown",
+                                                           "entries":  36,
+                                                           "parsedBlocks":  36,
+                                                           "skippedBlocks":  0,
+                                                           "errorCount":  0,
+                                                           "warningCount":  0,
+                                                           "contractPassed":  true,
+                                                           "primaryIssues":  [
+
+                                                                             ]
+                                                       }
+                                                   ]
+                                    },
+                       "registry":  {
+                                        "totalEntries":  96,
+                                        "distinctCanonicalKeys":  70,
+                                        "duplicateCanonicalKeys":  0,
+                                        "duplicateSamples":  [
+
+                                                             ]
+                                    },
+                       "unresolved":  {
+                                          "unresolvedRefs":  228,
+                                          "unresolvedDistinctLabels":  170,
+                                          "topLabels":  [
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Give me a minute!",
+                                                                "count":  3
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "I\u0027m absolutely delighted for you!",
+                                                                "count":  3
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It is + adj. (small) + for sb. to do sth.",
+                                                                "count":  3
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It is + adj. + to do sth. with little + n.",
+                                                                "count":  3
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It will take sb. + 鏃堕棿娈?+ minutes to do sth.",
+                                                                "count":  3
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Little did I know!",
+                                                                "count":  3
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "No big deal, it\u0027s just a small mistake.",
+                                                                "count":  3
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "\"That\u0027s large of you!\"",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "at large",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "be chuffed to bits (鑻卞紡淇氳锛屼笌delighted琛ㄦ剰楂樺害鎺ヨ繎)",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "be delighted + (that) 浠庡彞",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "be delighted + to do sth",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "be happy to do sth.",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "big cheese",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "big deal",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "big decision",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "big opportunity",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "big time",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "by and large",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "delighted as a sandboy",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "antonyms",
+                                                                "sourceLabel":  "disappointed",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "antonyms",
+                                                                "sourceLabel":  "gloomy",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "happy as a clam",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Happy as a clam!",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "happy camper",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Happy days!",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "happy ending",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "happy go lucky",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "happy hour",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "happy occasion",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "Happy wife, happy life.",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "How big of you!",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It is + adj. + for sb. to do sth. (褰搇arge淇グ鎶借薄姒傚康鏃跺彲鎷撳睍涓猴細It is a large undertaking for sb. to do sth.)",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It makes sb. sad that...",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It\u0027s big of sb. to do sth.",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "jump for delight",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "jump for joy",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "large as life",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "large number",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "large scale",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "synonyms",
+                                                                "sourceLabel":  "melancholy",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "sad face",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "sad news",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "sad reality",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "sad sack",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "sad story",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "sadder but wiser",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "talk big",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "talk large",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "That\u0027s so sad!",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "synonyms",
+                                                                "sourceLabel":  "wretched",
+                                                                "count":  2
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "collocations.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "inclement weather",
+                                                                "count":  1
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "collocations.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "terrible weather",
+                                                                "count":  1
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "collocations.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "wretched existence",
+                                                                "count":  1
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "idioms.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "it\u0027s water under the bridge",
+                                                                "count":  1
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "idioms.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "stress out",
+                                                                "count":  1
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "phrases.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "make sb\u0027s life miserable",
+                                                                "count":  1
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "phrases.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "narrow victory",
+                                                                "count":  1
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "phrases.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "push sb to the edge",
+                                                                "count":  1
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "phrases.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "total failure",
+                                                                "count":  1
+                                                            }
+                                                        ]
+                                      },
+                       "patchSuggestions":  {
+                                                "total":  170,
+                                                "byStrategy":  {
+                                                                   "add_ref":  127,
+                                                                   "create_node":  43
+                                                               },
+                                                "top":  [
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Give me a minute!",
+                                                                "count":  3,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "minute",
+                                                                "proposedTargetCanonicalKey":  "minute"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "I\u0027m absolutely delighted for you!",
+                                                                "count":  3,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "absolutely delighted",
+                                                                "proposedTargetCanonicalKey":  "absolutely delighted"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It is + adj. (small) + for sb. to do sth.",
+                                                                "count":  3,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It is + adj. + to do sth. with little + n.",
+                                                                "count":  3,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It will take sb. + 鏃堕棿娈?+ minutes to do sth.",
+                                                                "count":  3,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Little did I know!",
+                                                                "count":  3,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "little",
+                                                                "proposedTargetCanonicalKey":  "little"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "No big deal, it\u0027s just a small mistake.",
+                                                                "count":  3,
+                                                                "strategy":  "create_node",
+                                                                "confidence":  0.45,
+                                                                "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "at large",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "large",
+                                                                "proposedTargetCanonicalKey":  "large"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "be delighted + to do sth",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "be happy to do sth.",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "big cheese",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "big",
+                                                                "proposedTargetCanonicalKey":  "big"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "big deal",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "big",
+                                                                "proposedTargetCanonicalKey":  "big"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "big decision",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "big",
+                                                                "proposedTargetCanonicalKey":  "big"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "big opportunity",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "big",
+                                                                "proposedTargetCanonicalKey":  "big"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "big time",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "big",
+                                                                "proposedTargetCanonicalKey":  "big"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "by and large",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "little by little and bit by bit",
+                                                                "proposedTargetCanonicalKey":  "little by little and bit by bit"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "delighted as a sandboy",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "delighted",
+                                                                "proposedTargetCanonicalKey":  "delighted"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "happy as a clam",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Happy as a clam!",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "happy camper",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Happy days!",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "happy ending",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "happy go lucky",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "happy hour",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "happy occasion",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "Happy wife, happy life.",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It is + adj. + for sb. to do sth. (褰搇arge淇グ鎶借薄姒傚康鏃跺彲鎷撳睍涓猴細It is a large undertaking for sb. to do sth.)",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It\u0027s big of sb. to do sth.",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "large as life",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "large",
+                                                                "proposedTargetCanonicalKey":  "large"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "large number",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "large",
+                                                                "proposedTargetCanonicalKey":  "large"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "large scale",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "large",
+                                                                "proposedTargetCanonicalKey":  "large"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "sad face",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "sad",
+                                                                "proposedTargetCanonicalKey":  "sad"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "sad news",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "sad",
+                                                                "proposedTargetCanonicalKey":  "sad"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "sad reality",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "sad",
+                                                                "proposedTargetCanonicalKey":  "sad"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "sad sack",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "sad",
+                                                                "proposedTargetCanonicalKey":  "sad"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "sad story",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "sad",
+                                                                "proposedTargetCanonicalKey":  "sad"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "talk big",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "big",
+                                                                "proposedTargetCanonicalKey":  "big"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "talk large",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "large",
+                                                                "proposedTargetCanonicalKey":  "large"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "That\u0027s so sad!",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "sad",
+                                                                "proposedTargetCanonicalKey":  "sad"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "synonyms",
+                                                                "sourceLabel":  "wretched",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "wretched life",
+                                                                "proposedTargetCanonicalKey":  "wretched life"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "\"That\u0027s large of you!\"",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.83,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "large",
+                                                                "proposedTargetCanonicalKey":  "large"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "be delighted + (that) 浠庡彞",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.83,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "delighted",
+                                                                "proposedTargetCanonicalKey":  "delighted"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "How big of you!",
+                                                                "count":  2,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.83,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "big",
+                                                                "proposedTargetCanonicalKey":  "big"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "be chuffed to bits (鑻卞紡淇氳锛屼笌delighted琛ㄦ剰楂樺害鎺ヨ繎)",
+                                                                "count":  2,
+                                                                "strategy":  "create_node",
+                                                                "confidence":  0.45,
+                                                                "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "antonyms",
+                                                                "sourceLabel":  "disappointed",
+                                                                "count":  2,
+                                                                "strategy":  "create_node",
+                                                                "confidence":  0.45,
+                                                                "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "antonyms",
+                                                                "sourceLabel":  "gloomy",
+                                                                "count":  2,
+                                                                "strategy":  "create_node",
+                                                                "confidence":  0.45,
+                                                                "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "sentencePatterns",
+                                                                "sourceLabel":  "It makes sb. sad that...",
+                                                                "count":  2,
+                                                                "strategy":  "create_node",
+                                                                "confidence":  0.45,
+                                                                "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "jump for delight",
+                                                                "count":  2,
+                                                                "strategy":  "create_node",
+                                                                "confidence":  0.45,
+                                                                "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "jump for joy",
+                                                                "count":  2,
+                                                                "strategy":  "create_node",
+                                                                "confidence":  0.45,
+                                                                "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "synonyms",
+                                                                "sourceLabel":  "melancholy",
+                                                                "count":  2,
+                                                                "strategy":  "create_node",
+                                                                "confidence":  0.45,
+                                                                "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "sadder but wiser",
+                                                                "count":  2,
+                                                                "strategy":  "create_node",
+                                                                "confidence":  0.45,
+                                                                "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "\"That\u0027s extensive!\"",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "extensive",
+                                                                "proposedTargetCanonicalKey":  "extensive"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "\"That\u0027s extensive!\"",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "extensive",
+                                                                "proposedTargetCanonicalKey":  "extensive"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "idioms",
+                                                                "sourceLabel":  "as cheerful as a lark",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "cheerful",
+                                                                "proposedTargetCanonicalKey":  "cheerful"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "cheerful appearance",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "cheerful",
+                                                                "proposedTargetCanonicalKey":  "cheerful"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "cheerful atmosphere",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "cheerful",
+                                                                "proposedTargetCanonicalKey":  "cheerful"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "cheerful company",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "cheerful",
+                                                                "proposedTargetCanonicalKey":  "cheerful"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "cheerful disposition",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "cheerful",
+                                                                "proposedTargetCanonicalKey":  "cheerful"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "cheerful juice",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "cheerful",
+                                                                "proposedTargetCanonicalKey":  "cheerful"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "cheerful smile",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "cheerful",
+                                                                "proposedTargetCanonicalKey":  "cheerful"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "enormous amount of",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "enormous",
+                                                                "proposedTargetCanonicalKey":  "enormous"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "enormous potential",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "enormous",
+                                                                "proposedTargetCanonicalKey":  "enormous"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "enormous pressure",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "enormous",
+                                                                "proposedTargetCanonicalKey":  "enormous"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "enormous success",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "enormous",
+                                                                "proposedTargetCanonicalKey":  "enormous"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "extensive damage",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "extensive",
+                                                                "proposedTargetCanonicalKey":  "extensive"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "extensive experience",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "extensive",
+                                                                "proposedTargetCanonicalKey":  "extensive"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "extensive flex",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "extensive",
+                                                                "proposedTargetCanonicalKey":  "extensive"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "extensive reading",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "extensive",
+                                                                "proposedTargetCanonicalKey":  "extensive"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "extensive research",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "extensive",
+                                                                "proposedTargetCanonicalKey":  "extensive"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "feel sad",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "sad",
+                                                                "proposedTargetCanonicalKey":  "sad"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "genuinely delighted",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "delighted",
+                                                                "proposedTargetCanonicalKey":  "delighted"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Give me a minute!",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "minute",
+                                                                "proposedTargetCanonicalKey":  "minute"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Happy as a clam!",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                "sourceField":  "spokenExpressions",
+                                                                "sourceLabel":  "Happy days!",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "happy ending",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "happy marriage",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "happy memories",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "happy",
+                                                                "proposedTargetCanonicalKey":  "happy"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "phrases",
+                                                                "sourceLabel":  "huge amount of",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "huge",
+                                                                "proposedTargetCanonicalKey":  "huge"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "slang",
+                                                                "sourceLabel":  "huge cheese",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "huge",
+                                                                "proposedTargetCanonicalKey":  "huge"
+                                                            },
+                                                            {
+                                                                "sourceFileName":  "word.md",
+                                                                "sourceField":  "collocations",
+                                                                "sourceLabel":  "huge demand",
+                                                                "count":  1,
+                                                                "strategy":  "add_ref",
+                                                                "confidence":  0.84,
+                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                "proposedTargetHeadword":  "huge",
+                                                                "proposedTargetCanonicalKey":  "huge"
+                                                            }
+                                                        ],
+                                                "byFile":  {
+                                                               "word.md":  [
+                                                                               {
+                                                                                   "sourceFileName":  "word.md",
+                                                                                   "sourceField":  "spokenExpressions",
+                                                                                   "sourceLabel":  "Give me a minute!",
+                                                                                   "count":  3,
+                                                                                   "strategy":  "add_ref",
+                                                                                   "confidence":  0.84,
+                                                                                   "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                   "proposedTargetHeadword":  "minute",
+                                                                                   "proposedTargetCanonicalKey":  "minute"
+                                                                               },
+                                                                               {
+                                                                                   "sourceFileName":  "word.md",
+                                                                                   "sourceField":  "spokenExpressions",
+                                                                                   "sourceLabel":  "I\u0027m absolutely delighted for you!",
+                                                                                   "count":  3,
+                                                                                   "strategy":  "add_ref",
+                                                                                   "confidence":  0.84,
+                                                                                   "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                   "proposedTargetHeadword":  "absolutely delighted",
+                                                                                   "proposedTargetCanonicalKey":  "absolutely delighted"
+                                                                               },
+                                                                               {
+                                                                                   "sourceFileName":  "word.md",
+                                                                                   "sourceField":  "sentencePatterns",
+                                                                                   "sourceLabel":  "It is + adj. (small) + for sb. to do sth.",
+                                                                                   "count":  3,
+                                                                                   "strategy":  "add_ref",
+                                                                                   "confidence":  0.84,
+                                                                                   "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                   "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                                   "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                                               },
+                                                                               {
+                                                                                   "sourceFileName":  "word.md",
+                                                                                   "sourceField":  "sentencePatterns",
+                                                                                   "sourceLabel":  "It is + adj. + to do sth. with little + n.",
+                                                                                   "count":  3,
+                                                                                   "strategy":  "add_ref",
+                                                                                   "confidence":  0.84,
+                                                                                   "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                   "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                                   "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                                               },
+                                                                               {
+                                                                                   "sourceFileName":  "word.md",
+                                                                                   "sourceField":  "sentencePatterns",
+                                                                                   "sourceLabel":  "It will take sb. + 鏃堕棿娈?+ minutes to do sth.",
+                                                                                   "count":  3,
+                                                                                   "strategy":  "add_ref",
+                                                                                   "confidence":  0.84,
+                                                                                   "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                   "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                                   "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                                               },
+                                                                               {
+                                                                                   "sourceFileName":  "word.md",
+                                                                                   "sourceField":  "spokenExpressions",
+                                                                                   "sourceLabel":  "Little did I know!",
+                                                                                   "count":  3,
+                                                                                   "strategy":  "add_ref",
+                                                                                   "confidence":  0.84,
+                                                                                   "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                   "proposedTargetHeadword":  "little",
+                                                                                   "proposedTargetCanonicalKey":  "little"
+                                                                               },
+                                                                               {
+                                                                                   "sourceFileName":  "word.md",
+                                                                                   "sourceField":  "spokenExpressions",
+                                                                                   "sourceLabel":  "No big deal, it\u0027s just a small mistake.",
+                                                                                   "count":  3,
+                                                                                   "strategy":  "create_node",
+                                                                                   "confidence":  0.45,
+                                                                                   "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                                               },
+                                                                               {
+                                                                                   "sourceFileName":  "word.md",
+                                                                                   "sourceField":  "phrases",
+                                                                                   "sourceLabel":  "at large",
+                                                                                   "count":  2,
+                                                                                   "strategy":  "add_ref",
+                                                                                   "confidence":  0.84,
+                                                                                   "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                   "proposedTargetHeadword":  "large",
+                                                                                   "proposedTargetCanonicalKey":  "large"
+                                                                               },
+                                                                               {
+                                                                                   "sourceFileName":  "word.md",
+                                                                                   "sourceField":  "sentencePatterns",
+                                                                                   "sourceLabel":  "be delighted + to do sth",
+                                                                                   "count":  2,
+                                                                                   "strategy":  "add_ref",
+                                                                                   "confidence":  0.84,
+                                                                                   "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                   "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                                   "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                                               },
+                                                                               {
+                                                                                   "sourceFileName":  "word.md",
+                                                                                   "sourceField":  "sentencePatterns",
+                                                                                   "sourceLabel":  "be happy to do sth.",
+                                                                                   "count":  2,
+                                                                                   "strategy":  "add_ref",
+                                                                                   "confidence":  0.84,
+                                                                                   "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                   "proposedTargetHeadword":  "It is miserable for sb to do sth",
+                                                                                   "proposedTargetCanonicalKey":  "it is miserable for sb to do sth"
+                                                                               }
+                                                                           ],
+                                                               "spokenExpressions.md":  [
+                                                                                            {
+                                                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                                                "sourceField":  "spokenExpressions",
+                                                                                                "sourceLabel":  "\"That\u0027s extensive!\"",
+                                                                                                "count":  1,
+                                                                                                "strategy":  "add_ref",
+                                                                                                "confidence":  0.84,
+                                                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                                "proposedTargetHeadword":  "extensive",
+                                                                                                "proposedTargetCanonicalKey":  "extensive"
+                                                                                            },
+                                                                                            {
+                                                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                                                "sourceField":  "spokenExpressions",
+                                                                                                "sourceLabel":  "Give me a minute!",
+                                                                                                "count":  1,
+                                                                                                "strategy":  "add_ref",
+                                                                                                "confidence":  0.84,
+                                                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                                "proposedTargetHeadword":  "minute",
+                                                                                                "proposedTargetCanonicalKey":  "minute"
+                                                                                            },
+                                                                                            {
+                                                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                                                "sourceField":  "spokenExpressions",
+                                                                                                "sourceLabel":  "Happy as a clam!",
+                                                                                                "count":  1,
+                                                                                                "strategy":  "add_ref",
+                                                                                                "confidence":  0.84,
+                                                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                                "proposedTargetHeadword":  "happy",
+                                                                                                "proposedTargetCanonicalKey":  "happy"
+                                                                                            },
+                                                                                            {
+                                                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                                                "sourceField":  "spokenExpressions",
+                                                                                                "sourceLabel":  "Happy days!",
+                                                                                                "count":  1,
+                                                                                                "strategy":  "add_ref",
+                                                                                                "confidence":  0.84,
+                                                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                                "proposedTargetHeadword":  "happy",
+                                                                                                "proposedTargetCanonicalKey":  "happy"
+                                                                                            },
+                                                                                            {
+                                                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                                                "sourceField":  "spokenExpressions",
+                                                                                                "sourceLabel":  "I\u0027m absolutely delighted for you!",
+                                                                                                "count":  1,
+                                                                                                "strategy":  "add_ref",
+                                                                                                "confidence":  0.84,
+                                                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                                "proposedTargetHeadword":  "absolutely delighted",
+                                                                                                "proposedTargetCanonicalKey":  "absolutely delighted"
+                                                                                            },
+                                                                                            {
+                                                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                                                "sourceField":  "spokenExpressions",
+                                                                                                "sourceLabel":  "Little did I know!",
+                                                                                                "count":  1,
+                                                                                                "strategy":  "add_ref",
+                                                                                                "confidence":  0.84,
+                                                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                                "proposedTargetHeadword":  "little",
+                                                                                                "proposedTargetCanonicalKey":  "little"
+                                                                                            },
+                                                                                            {
+                                                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                                                "sourceField":  "spokenExpressions",
+                                                                                                "sourceLabel":  "That\u0027s enormous!",
+                                                                                                "count":  1,
+                                                                                                "strategy":  "add_ref",
+                                                                                                "confidence":  0.84,
+                                                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                                "proposedTargetHeadword":  "enormous",
+                                                                                                "proposedTargetCanonicalKey":  "enormous"
+                                                                                            },
+                                                                                            {
+                                                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                                                "sourceField":  "spokenExpressions",
+                                                                                                "sourceLabel":  "That\u0027s huge!",
+                                                                                                "count":  1,
+                                                                                                "strategy":  "add_ref",
+                                                                                                "confidence":  0.84,
+                                                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                                "proposedTargetHeadword":  "huge",
+                                                                                                "proposedTargetCanonicalKey":  "huge"
+                                                                                            },
+                                                                                            {
+                                                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                                                "sourceField":  "spokenExpressions",
+                                                                                                "sourceLabel":  "That\u0027s massive!",
+                                                                                                "count":  1,
+                                                                                                "strategy":  "add_ref",
+                                                                                                "confidence":  0.84,
+                                                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                                "proposedTargetHeadword":  "massive",
+                                                                                                "proposedTargetCanonicalKey":  "massive"
+                                                                                            },
+                                                                                            {
+                                                                                                "sourceFileName":  "spokenExpressions.md",
+                                                                                                "sourceField":  "spokenExpressions",
+                                                                                                "sourceLabel":  "That\u0027s so sad!",
+                                                                                                "count":  1,
+                                                                                                "strategy":  "add_ref",
+                                                                                                "confidence":  0.84,
+                                                                                                "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                                "proposedTargetHeadword":  "sad",
+                                                                                                "proposedTargetCanonicalKey":  "sad"
+                                                                                            }
+                                                                                        ],
+                                                               "collocations.md":  [
+                                                                                       {
+                                                                                           "sourceFileName":  "collocations.md",
+                                                                                           "sourceField":  "collocations",
+                                                                                           "sourceLabel":  "inclement weather",
+                                                                                           "count":  1,
+                                                                                           "strategy":  "add_ref",
+                                                                                           "confidence":  0.84,
+                                                                                           "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                           "proposedTargetHeadword":  "dreadful weather",
+                                                                                           "proposedTargetCanonicalKey":  "dreadful weather"
+                                                                                       },
+                                                                                       {
+                                                                                           "sourceFileName":  "collocations.md",
+                                                                                           "sourceField":  "collocations",
+                                                                                           "sourceLabel":  "terrible weather",
+                                                                                           "count":  1,
+                                                                                           "strategy":  "add_ref",
+                                                                                           "confidence":  0.84,
+                                                                                           "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                           "proposedTargetHeadword":  "dreadful weather",
+                                                                                           "proposedTargetCanonicalKey":  "dreadful weather"
+                                                                                       },
+                                                                                       {
+                                                                                           "sourceFileName":  "collocations.md",
+                                                                                           "sourceField":  "collocations",
+                                                                                           "sourceLabel":  "wretched existence",
+                                                                                           "count":  1,
+                                                                                           "strategy":  "add_ref",
+                                                                                           "confidence":  0.84,
+                                                                                           "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                           "proposedTargetHeadword":  "miserable existence",
+                                                                                           "proposedTargetCanonicalKey":  "miserable existence"
+                                                                                       }
+                                                                                   ],
+                                                               "phrases.md":  [
+                                                                                  {
+                                                                                      "sourceFileName":  "phrases.md",
+                                                                                      "sourceField":  "phrases",
+                                                                                      "sourceLabel":  "make sb\u0027s life miserable",
+                                                                                      "count":  1,
+                                                                                      "strategy":  "add_ref",
+                                                                                      "confidence":  0.84,
+                                                                                      "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                      "proposedTargetHeadword":  "make sb miserable",
+                                                                                      "proposedTargetCanonicalKey":  "make sb miserable"
+                                                                                  },
+                                                                                  {
+                                                                                      "sourceFileName":  "phrases.md",
+                                                                                      "sourceField":  "phrases",
+                                                                                      "sourceLabel":  "push sb to the edge",
+                                                                                      "count":  1,
+                                                                                      "strategy":  "add_ref",
+                                                                                      "confidence":  0.84,
+                                                                                      "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                      "proposedTargetHeadword":  "drive sb to despair",
+                                                                                      "proposedTargetCanonicalKey":  "drive sb to despair"
+                                                                                  },
+                                                                                  {
+                                                                                      "sourceFileName":  "phrases.md",
+                                                                                      "sourceField":  "phrases",
+                                                                                      "sourceLabel":  "total failure",
+                                                                                      "count":  1,
+                                                                                      "strategy":  "add_ref",
+                                                                                      "confidence":  0.84,
+                                                                                      "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                      "proposedTargetHeadword":  "miserable failure",
+                                                                                      "proposedTargetCanonicalKey":  "miserable failure"
+                                                                                  },
+                                                                                  {
+                                                                                      "sourceFileName":  "phrases.md",
+                                                                                      "sourceField":  "phrases",
+                                                                                      "sourceLabel":  "narrow victory",
+                                                                                      "count":  1,
+                                                                                      "strategy":  "create_node",
+                                                                                      "confidence":  0.45,
+                                                                                      "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                                                  }
+                                                                              ],
+                                                               "slang.md":  [
+                                                                                {
+                                                                                    "sourceFileName":  "slang.md",
+                                                                                    "sourceField":  "slang",
+                                                                                    "sourceLabel":  "old fogey",
+                                                                                    "count":  1,
+                                                                                    "strategy":  "add_ref",
+                                                                                    "confidence":  0.83,
+                                                                                    "rationale":  "Label shares headword token with existing registry item; prefer explicit refs link in source asset.",
+                                                                                    "proposedTargetHeadword":  "grumpy old git",
+                                                                                    "proposedTargetCanonicalKey":  "grumpy old git"
+                                                                                },
+                                                                                {
+                                                                                    "sourceFileName":  "slang.md",
+                                                                                    "sourceField":  "slang",
+                                                                                    "sourceLabel":  "pommy",
+                                                                                    "count":  1,
+                                                                                    "strategy":  "create_node",
+                                                                                    "confidence":  0.45,
+                                                                                    "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                                                }
+                                                                            ],
+                                                               "idioms.md":  [
+                                                                                 {
+                                                                                     "sourceFileName":  "idioms.md",
+                                                                                     "sourceField":  "idioms",
+                                                                                     "sourceLabel":  "it\u0027s water under the bridge",
+                                                                                     "count":  1,
+                                                                                     "strategy":  "create_node",
+                                                                                     "confidence":  0.45,
+                                                                                     "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                                                 },
+                                                                                 {
+                                                                                     "sourceFileName":  "idioms.md",
+                                                                                     "sourceField":  "idioms",
+                                                                                     "sourceLabel":  "stress out",
+                                                                                     "count":  1,
+                                                                                     "strategy":  "create_node",
+                                                                                     "confidence":  0.45,
+                                                                                     "rationale":  "No reliable registry match found; create canonical node or enrich source assets first."
+                                                                                 }
+                                                                             ]
+                                                           }
+                                            }
+                   }
+}

@@ -23,7 +23,7 @@ DuoXX is a gamified language learning app built with Expo and React Native. It f
 
 ## Rule Priority (Mandatory)
 - If rules conflict, follow this priority:
-  1) Constitutions (Admin UI, Product/Data, Development-Phase)
+  1) Constitutions (Admin UI, UX/Cognitive-Load, Product/Data, Development-Phase, Encoding/Text)
   2) Closed-Loop Autopilot Protocol
   3) Style examples/snippets
 - Development-stage default is architecture-first: do not use workaround/fallback paths as a substitute for fixing root design issues.
@@ -253,6 +253,15 @@ describe('Module Name', () => {
 - Prefer single-layer row/list presentation with direct actions over multi-level boxed wrappers.
 - If hierarchy must be shown, use text metadata (e.g., `Unit/Lesson`) instead of extra nested frames.
 
+### UX/Cognitive-Load Constitution (Mandatory)
+- Core metric: minimize cognitive load is a hard requirement for all UI/UX changes.
+- One-screen rule: each screen must have one dominant user goal and one visually dominant primary action.
+- Decision minimization: avoid exposing many peer-level choices at once; prefer progressive disclosure for low-frequency actions.
+- Entry governance: do not add a new top-level entry unless it replaces, merges, or clearly outperforms an existing one.
+- Mobile ergonomics: high-frequency actions should be placed in easy-to-reach lower zones; low-frequency actions should be moved away from prime tap areas.
+- Naming clarity: use user-task wording over internal/system wording; avoid ambiguous labels that create duplicate mental models.
+- Delivery gate: every UI task response must include a brief "cognitive-load check" statement (what was reduced, what was deferred/hidden, and why).
+
 ### Product/Data Constitution (Mandatory)
 - Root-cause over quick patch: for new-project foundations, do not accept tactical fixes that create long-term debt.
 - Source-first correction: if issue originates from raw source assets (CSV/Markdown/etc.), fix source files and re-import; runtime patching is only temporary incident mitigation.
@@ -265,6 +274,13 @@ describe('Module Name', () => {
 - No debt by default: do not introduce temporary structures that are expected to become long-term burden.
 - No workaround/fallback padding by default: do not add "just-in-case" guard paths that hide root-cause issues during development.
 - Fix the model, not the symptom: if current structure is wrong, refactor toward the correct design instead of layering compensating logic.
+
+### Encoding/Text Constitution (Mandatory)
+- UTF-8 first: all source code, JSON/Markdown docs, and user-facing copy MUST be saved and reviewed as UTF-8 text.
+- No mojibake strings in shipped code: strings that look like `鏀惰棌/閲婁箟/渚嬪彞/姝...` MUST be treated as defects and fixed before merge.
+- Any user-facing Chinese copy change MUST run a targeted scan on touched files before delivery (search for mojibake patterns and replacement char `�`).
+- Do not use shell append/replace flows that may inject control chars or escape corruption into docs/content; prefer direct file patch edits.
+- If mojibake is found, block release for the affected page/API until corrected and re-verified in runtime view.
 
 ### File Organization
 ```
@@ -362,3 +378,4 @@ await updateAvatarAfterExercise(
 - Data: `src/data/achievements/`
 - Components: `src/components/feedback/`, `src/components/progress/`
 - Screens: `app/progress-dashboard.tsx`, `app/achievements.tsx`, `app/goal-settings.tsx`
+
