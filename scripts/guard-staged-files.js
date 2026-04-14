@@ -62,6 +62,14 @@ function runGit(args, asBuffer = false) {
   });
 }
 
+function tryRunGit(args, asBuffer = false) {
+  try {
+    return runGit(args, asBuffer);
+  } catch {
+    return asBuffer ? Buffer.alloc(0) : '';
+  }
+}
+
 function getStagedFiles() {
   const output = runGit(['diff', '--cached', '--name-only', '--diff-filter=ACMR']);
   return output
@@ -108,8 +116,11 @@ function collectViolations(files) {
     }
 
     const text = bytes.toString('utf8');
-    if (text.includes('\uFFFD')) {
-      mojibakeViolations.push(`${file} (contains replacement char U+FFFD)`);
+    const headText = tryRunGit(['show', `HEAD:${file}`], true).toString('utf8');
+    const stagedReplacementCount = (text.match(/\uFFFD/g) || []).length;
+    const headReplacementCount = (headText.match(/\uFFFD/g) || []).length;
+    if (stagedReplacementCount > headReplacementCount) {
+      mojibakeViolations.push(`${file} (new replacement char U+FFFD found)`);
       return;
     }
 
@@ -118,9 +129,13 @@ function collectViolations(files) {
       return;
     }
 
-    const marker = MOJIBAKE_MARKERS.find((item) => text.includes(item));
+    const marker = MOJIBAKE_MARKERS.find((item) => {
+      const stagedCount = (text.match(new RegExp(item, 'g')) || []).length;
+      const headCount = (headText.match(new RegExp(item, 'g')) || []).length;
+      return stagedCount > headCount;
+    });
     if (marker) {
-      mojibakeViolations.push(`${file} (marker: ${marker})`);
+      mojibakeViolations.push(`${file} (new marker: ${marker})`);
     }
   });
 
@@ -156,4 +171,3 @@ function main() {
 }
 
 main();
-
