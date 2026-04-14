@@ -1,3 +1,80 @@
+## 2026-04-14 (Knowledge absorb breadcrumb rule clarified as explicit 2+ depth)
+- What changed:
+  - Refined `duoxx/app/knowledge-absorb.tsx` breadcrumb visibility logic with explicit boolean:
+    - `const shouldShowBreadcrumb = navigationStack.length >= 2`.
+  - Rewired breadcrumb row rendering and title offset to use `shouldShowBreadcrumb`.
+  - This locks the expected behavior:
+    - depth `1`: hide root breadcrumb chip,
+    - depth `2+`: show full breadcrumb levels (including first and current).
+- What was learned:
+  - Making depth rule explicit avoids interpretation drift from scattered inline length checks.
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm run lint -- app/knowledge-absorb.tsx` passed.
+
+## 2026-04-14 (Knowledge absorb: hide breadcrumb when only one node)
+- What changed:
+  - Updated `duoxx/app/knowledge-absorb.tsx` breadcrumb rendering condition from `navigationStack.length > 0` to `navigationStack.length > 1`.
+  - Updated title spacing condition to match breadcrumb visibility rule (`cardTitleWithBreadcrumb` now applies only when breadcrumb is actually shown).
+  - Result: when there is only one current node (no real path), the first breadcrumb chip is hidden.
+- What was learned:
+  - Single-node state is a “current card” state, not a breadcrumb state; showing a one-item breadcrumb increases visual noise and duplicates the title.
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm run lint -- app/knowledge-absorb.tsx` passed.
+- Next steps / open questions:
+  - If needed, apply the same “min 2 nodes” rule to any other page that reuses breadcrumb UI patterns.
+
+## 2026-04-14 (Knowledge absorb: expansion items now support click-to-drill navigation)
+- What changed:
+  - Updated `duoxx/app/knowledge-absorb.tsx` so expansion list rows in the bottom drawer are now clickable (`TouchableOpacity`) instead of static display rows.
+  - Wired each expansion row click to `handleOpenNode(item)`, which reuses the existing node navigation flow:
+    - switch active card content to clicked knowledge node,
+    - push breadcrumb stack,
+    - reset per-node expansion panel state and load that node's own expansions.
+  - Added compact interaction affordance in each expansion row (right chevron) and adjusted row layout styles for tappable hit area.
+- What was learned:
+  - The core navigation state machine (`activeNodeRef + navigationStack + expandedGroupsByNodeId`) was already complete; missing behavior was only the expansion-row interaction binding in the renderer.
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm run lint -- app/knowledge-absorb.tsx` passed.
+- Next steps / open questions:
+  - If needed, add press-state highlight (or subtle scale feedback) for better mobile tap feedback consistency across all drillable list items.
+
+## 2026-04-10 (Graph search: active scope keyword fallback to published snapshot)
+- What changed:
+  - Updated backend node search in `duoxx_server_link/src/services/lexiconGraphService.js`:
+    - In `listNodes(scope='active')`, when keyword search returns 0 active hits, the service now automatically retries against the active published snapshot and returns matched rows.
+    - Added response meta flags for transparency: `fallbackScope: 'published'`, `fallbackReason: 'active_keyword_miss'`, `snapshotVersion`.
+  - Added integration coverage in `duoxx_server_link/src/services/__tests__/lexiconGraphService.integration.test.js`:
+    - Verifies normal active hit (`run`) stays on active results.
+    - Verifies fallback hit (`go`) is returned from snapshot when active has no match.
+  - Updated frontend types in `duoxx/src/services/lexiconApi.ts` to include fallback meta fields.
+  - Updated `duoxx/components/admin/LexiconGraphExplorerPanel.tsx` to display a hint when active-search results are coming from published snapshot fallback.
+  - Verification:
+    - `duoxx`: `npx tsc --noEmit` passed.
+    - backend JS syntax: `node --check src/services/lexiconGraphService.js` passed.
+- What was learned:
+  - The admin “active nodes” source and learner-facing snapshot source can diverge; pure active-scope search can miss terms users see in learning cards.
+  - A scoped fallback keeps operator search usable without changing existing scope controls.
+- Next steps / open questions:
+  - In a backend environment with dependencies installed, run `jest src/services/__tests__/lexiconGraphService.integration.test.js` to validate runtime behavior.
+  - Decide whether to keep fallback as long-term behavior or add an explicit “search both scopes” toggle later.
+
+## 2026-04-10 (Admin pipeline graph relation panel style refresh)
+- What changed:
+  - Updated `duoxx/components/admin/LexiconGraphExplorerPanel.tsx` relation panel UI in `/admin/pipeline` knowledge graph view.
+  - Fixed relation-group tab strip stretching issue by adding compact horizontal tab sizing (`groupTabs`, `groupRow alignItems`, `groupBtn alignSelf/minHeight`).
+  - Redesigned group tabs to show label + count badge instead of long text count suffix.
+  - Improved relation item readability: edge type and confidence are now separate visual pills; row spacing and border/background are refined for clearer scanning.
+  - Added `formatEdgeTypeLabel()` for user-facing relation type labels.
+  - Verified compilation with `npx tsc --noEmit` under `duoxx/`.
+- What was learned:
+  - The “vertical capsule” visual bug came from cross-axis stretch behavior in horizontal `ScrollView` content, not from data payload shape.
+  - Compact chips plus separate count badge significantly reduce visual noise and improve relation-group scan speed.
+- Next steps / open questions:
+  - Run browser visual QA on `/admin/pipeline` relation panel using real long labels and small viewport widths to confirm no wrapping regression.
+
 ## 2026-04-03 (Browser smoke: /admin/pipeline Review Hub)
 - What changed:
   - Ran browser-level validation through recovered MCP channel on `http://localhost:8081/admin/pipeline`.
@@ -4605,3 +4682,209 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
 - Verification:
   - npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts -> pass.
   - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> pass.
+## 2026-04-09 (Knowledge absorb group integrity fix: source facets only)
+- What changed:
+  - Removed heuristic keyword-recall fallback from duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts::resolveExpansionNodeRefs.
+  - Grouped expansion content now resolves only from entryExpansionMap direct facet links, preserving category integrity.
+  - Simplified duoxx/app/knowledge-absorb.tsx non-sentence expansion area to render only the active group instead of stacking pager pages.
+  - Updated duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts to assert source-driven grouping rather than inferred POS-based grouping.
+- What was learned:
+  - Runtime recall is acceptable for recommendation surfaces, but not for semantically named categories such as synonyms, antonyms, collocations, and spoken expressions.
+- Verification:
+  - npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts -> pass.
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> pass.
+  - npm test -- --runInBand src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts -> pass.
+## 2026-04-09 (Knowledge absorb anti-regression: category isolation guard)
+- What changed:
+  - Added a dedicated regression test in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts that creates heavily overlapping labels across synonyms, antonyms, phrases, collocations, patterns, spoken expressions, slang, and idioms.
+  - The test asserts exact per-group label sets so any future cross-group leakage fails immediately.
+- What was learned:
+  - For this surface, category integrity is a contract. If a group is semantically named, it must never be filled by recommendation heuristics.
+- Verification:
+  - npm run lint -- src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts app/knowledge-absorb.tsx -> pass.
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> pass.
+  - npm test -- --runInBand src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts -> pass.
+## 2026-04-09 (Knowledge absorb display grouping: merged tabs for relations and spoken cluster)
+- What changed:
+  - Added display-layer grouping primitives in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts: ExpansionDisplayGroup, EXPANSION_DISPLAY_GROUPS, and uildExpansionDisplayGroupPages.
+  - Merged source groups into display groups: synonyms + antonyms -> relations, spoken + slangIdiom -> spokenCluster.
+  - Updated duoxx/app/knowledge-absorb.tsx to drive tabs and active group state from display groups instead of raw source groups.
+  - Added lightweight per-row source labels for merged groups so users can still tell whether an item came from synonym vs antonym, or spoken vs slang/idiom.
+  - Added regression test coverage in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts for merged display-group construction.
+- What was learned:
+  - Raw facet groups and UI display groups should be modeled separately. Source taxonomy preserves correctness; display taxonomy serves ergonomics.
+- Verification:
+  - npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts -> pass.
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> pass.
+  - npm test -- --runInBand src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts -> pass.
+## 2026-04-09 (Knowledge absorb display grouping: merge patterns with collocations)
+- What changed:
+  - Updated duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts display grouping contract to merge patterns + collocations into a single patternsCollocations display tab.
+  - New merged tab label is 句型/搭配.
+  - Updated regression test in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts to assert merged output and preserved source labels.
+- What was learned:
+  - Display grouping should keep collapsing adjacent low-frequency conceptual categories when they are browsed in the same intent, but without changing underlying facet taxonomy.
+- Verification:
+  - npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts -> pass.
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> pass.
+  - npm test -- --runInBand src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts -> pass.
+## 2026-04-09 (Knowledge absorb header compaction: filter moved into settings entry)
+- What changed:
+  - Removed the always-visible type filter block from duoxx/app/knowledge-absorb.tsx main flow.
+  - Added a compact 设置 button in the header action area.
+  - Type filter is now exposed through an on-demand settings panel and auto-collapses after selection.
+- What was learned:
+  - Type filtering is a low-frequency control; keeping it permanently visible wastes vertical space on the primary learning screen.
+- Verification:
+  - npm run lint -- app/knowledge-absorb.tsx -> pass.
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> pass.
+## 2026-04-09 (Knowledge absorb expansion rows simplified to static translations)
+- What changed:
+  - Extended AbsorbNodeRef in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts with optional summary so expansion rows can render translation/brief meaning directly.
+  - Updated duoxx/app/knowledge-absorb.tsx expansion list rows to be static content blocks instead of clickable navigation rows.
+  - Removed right-side chevrons and divider-line list treatment; rows now render as 	erm + translation with lightweight spacing.
+  - For merged display groups, rows still preserve source-group hint in the translation line when needed.
+- What was learned:
+  - Expansion knowledge rows are content, not navigation. Using menu affordances (chevrons, separators) created a false expectation of deeper drill-down.
+- Verification:
+  - npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts -> pass.
+  - node ./node_modules/typescript/bin/tsc --noEmit -p tsconfig.json -> pass.
+## 2026-04-10 (Knowledge absorb settings menu moved into anchored dropdown)
+- What changed:
+  - Repaired UTF-8 corruption in duoxx/app/knowledge-absorb.tsx by restoring the file from clean source and reapplying the intended UI change.
+  - Moved the knowledge absorb type filter from an in-flow settings panel to a compact dropdown anchored under the header `设置` button.
+  - Added local dropdown menu styles in duoxx/app/knowledge-absorb.tsx so the menu overlays the header area instead of pushing the main layout downward.
+- What was learned:
+  - Low-frequency filtering belongs in an anchored popover on this screen; rendering it in document flow creates visible layout shift and hurts interaction stability.
+- Verification:
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm run lint -- app/knowledge-absorb.tsx" -> pass.
+  - node .\\duoxx\\node_modules\\typescript\\bin\\tsc --noEmit -p .\\duoxx\\tsconfig.json -> pass.
+## 2026-04-10 (Knowledge absorb dropdown layering fixed above cards)
+- What changed:
+  - Updated duoxx/app/knowledge-absorb.tsx header/content stacking so the anchored settings dropdown renders above downstream cards instead of being covered.
+  - Raised the header stacking context and explicitly lowered content area stacking priority.
+- What was learned:
+  - On this screen, dropdown overlay correctness depends on the header sibling layer, not just the menu node's own `zIndex`.
+- Verification:
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm run lint -- app/knowledge-absorb.tsx" -> pass.
+  - node .\\duoxx\\node_modules\\typescript\\bin\\tsc --noEmit -p .\\duoxx\\tsconfig.json -> pass.
+## 2026-04-10 (Knowledge absorb tabs hide empty groups and prioritize phrases)
+- What changed:
+  - Updated duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts so display-group pages now filter out empty groups before reaching the UI.
+  - Reordered display-group generation so `常用词组` is emitted first when data exists, ahead of merged near/antonym and other groups.
+  - Added regression coverage in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts to enforce both behaviors.
+- What was learned:
+  - Empty-group suppression belongs in the display-group contract, not as a frontend rendering exception. That keeps tab order and visibility stable across screens.
+- Verification:
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm test -- --runInBand src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts" -> pass.
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm run lint -- src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts app/knowledge-absorb.tsx" -> pass.
+  - node .\\duoxx\\node_modules\\typescript\\bin\\tsc --noEmit -p .\\duoxx\\tsconfig.json -> pass.
+## 2026-04-10 (Knowledge absorb learned-count stat)
+- What changed:
+  - Added duoxx/src/modules/knowledge-absorb/knowledgeAbsorbProgress.ts to centralize storage keys and unique-id append logic for this screen's progress state.
+  - Added duoxx/src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts to lock the learned-id counting behavior.
+  - Updated duoxx/app/knowledge-absorb.tsx to persist and render `已学习`, defined as the count of unique root cards opened on the knowledge-absorb screen.
+  - The summary line now shows `已学习 · 已懂 · 收藏`.
+- What was learned:
+  - `已学习` and `已懂` must stay semantically separate on this page: one measures exposure, the other measures explicit mastery.
+- Verification:
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm test -- --runInBand src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts" -> pass.
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbProgress.ts src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts" -> pass.
+  - node .\\duoxx\\node_modules\\typescript\\bin\\tsc --noEmit -p .\\duoxx\\tsconfig.json -> pass.
+## 2026-04-10 (Knowledge absorb next-step duplicate root fix)
+- What changed:
+  - Updated duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts so session picking no longer falls back to already-seen roots while unseen roots still remain.
+  - Updated duoxx/app/knowledge-absorb.tsx so `下一步` de-duplicates against `已学习` history instead of only `已懂`.
+  - Added a regression test in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts to enforce the non-repeat selection rule.
+- What was learned:
+  - The previous repeat bug came from a contract mismatch: the picker treated `knownIds` as the exclusion source, while the screen's actual non-repeat intent is `learnedIds`, and the picker also reintroduced repeats too early when the unseen pool dropped below the requested batch size.
+- Verification:
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm test -- --runInBand src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts" -> pass.
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts src/modules/knowledge-absorb/knowledgeAbsorbProgress.ts src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts" -> pass.
+  - node .\\duoxx\\node_modules\\typescript\\bin\\tsc --noEmit -p .\\duoxx\\tsconfig.json -> pass.
+## 2026-04-10 (Knowledge absorb exhausted-pool state)
+- What changed:
+  - Added `countRemainingSessionRoots` in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts so the screen can tell when the current filter has no unseen roots left.
+  - Updated duoxx/app/knowledge-absorb.tsx to disable `下一条` and show `已刷完` when the active filter is exhausted, instead of repeating cards.
+  - Added regression coverage in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts for remaining-root counting.
+- What was learned:
+  - Once the unseen pool is exhausted, the correct UX is an explicit exhausted state, not silent repetition. Repetition made users read the behavior as a bug instead of a finite-pool boundary.
+- Verification:
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm test -- --runInBand src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts" -> pass.
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts src/modules/knowledge-absorb/knowledgeAbsorbProgress.ts src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts" -> pass.
+  - node .\\duoxx\\node_modules\\typescript\\bin\\tsc --noEmit -p .\\duoxx\\tsconfig.json -> pass.
+## 2026-04-10 (Knowledge absorb learned stat now shows current filter progress)
+- What changed:
+  - Extended duoxx/src/modules/knowledge-absorb/knowledgeAbsorbProgress.ts with current-filter learned counting logic.
+  - Added regression coverage in duoxx/src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts for per-filter learned counts.
+  - Updated duoxx/app/knowledge-absorb.tsx to render `已学习 X/Y`, where `X` is learned roots in the active filter and `Y` is the active filter's total root count.
+- What was learned:
+  - A single global learned count was misleading on this screen; progress needs to be scoped to the active filter because the user is browsing one type at a time.
+- Verification:
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm test -- --runInBand src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts" -> pass.
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbProgress.ts src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts" -> pass.
+  - node .\\duoxx\\node_modules\\typescript\\bin\\tsc --noEmit -p .\\duoxx\\tsconfig.json -> pass.
+## 2026-04-10 (Knowledge absorb learned stat simplified back to count only)
+- What changed:
+  - Updated duoxx/app/knowledge-absorb.tsx to show only `已学习 X`, while keeping the current-filter learned counting logic underneath.
+  - Removed the `Y` total from the progress text because the screen should not pressure users with fixed completion framing.
+- What was learned:
+  - On this page, showing the learned count is useful; showing the denominator changes the interaction tone from exploration to quota tracking.
+- Verification:
+  - cmd /c "cd /d d:\\06-project\\expo_duo\\duoxx && npm run lint -- app/knowledge-absorb.tsx src/modules/knowledge-absorb/knowledgeAbsorbProgress.ts src/modules/knowledge-absorb/knowledgeAbsorbProgress.test.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.ts src/modules/knowledge-absorb/knowledgeAbsorbEngine.test.ts" -> pass.
+  - node .\\duoxx\\node_modules\\typescript\\bin\\tsc --noEmit -p .\\duoxx\\tsconfig.json -> pass.
+## 2026-04-10 (Pipeline: lexicon graph explorer in main content area)
+- What changed:
+  - Added backend graph browse APIs in `duoxx_server_link/src/routes/pipeline.js`:
+    - `GET /api/pipeline/lexicon/nodes`
+    - `GET /api/pipeline/lexicon/nodes/:nodeId/relations`
+  - Added service support in `duoxx_server_link/src/services/lexiconGraphService.js` for:
+    - scope switch (`active` / `published`)
+    - fuzzy search over display text, lemma, definition, POS, headword, aliases
+    - paginated node listing and paginated relation listing with group counts
+  - Extended frontend API client surface in `duoxx/src/services/lexiconApi.ts`:
+    - `listGraphNodes`
+    - `listNodeRelations`
+    - admin payload/pagination types
+  - Added new admin UI panel `duoxx/components/admin/LexiconGraphExplorerPanel.tsx`.
+  - Integrated panel into pipeline main area via view toggle in `duoxx/components/admin/PipelineDashboard.tsx` (`课程内容 | 知识图谱`), and kept explanation side panel hidden in graph view.
+  - Extended route test mock coverage in `duoxx_server_link/src/routes/lexiconGraphFlow.test.js` for new endpoints.
+- What was learned:
+  - Existing `KnowledgeNode` workbench and lexical graph are separate systems; to match learning-side graph data, pipeline must read from `LexiconNode/LexiconEdge` and snapshot graph, not the older `KnowledgeNode` model.
+  - For admin fuzzy search + pagination with current API client behavior, returning a rich payload object inside `data` is the safest contract.
+- Verification:
+  - `node --check src/services/lexiconGraphService.js` -> pass.
+  - `node --check src/routes/pipeline.js` -> pass.
+  - `node --check src/routes/lexiconGraphFlow.test.js` -> pass.
+  - `npx tsc --noEmit` (in `duoxx/`) -> pass.
+  - Backend Jest could not be executed in this environment because `cross-env`/`jest` binaries are not available under `duoxx_server_link/node_modules`.
+## 2026-04-10 (Pipeline graph `? / ??` placeholder cleanup)
+- What changed:
+  - Added definition sanitization in `duoxx_server_link/src/services/lexiconGraphService.js`:
+    - New helper `sanitizeDefinitionValue` removes placeholder-only values like `?`, `??`, `？？` (and punctuation-only noise) to empty string.
+    - New helper `sanitizeNodeView` applies the sanitized definition when returning node payloads.
+  - Applied cleanup on both write-path and read-path:
+    - write-path: during lexicon batch import node upsert merge.
+    - read-path: `listNodes`, `listNodeRelations`, `getNode`, `expandNode`.
+  - Result: pipeline graph list/detail no longer shows noisy placeholder definitions as `??`; UI now falls back to `-` for empty definitions.
+- What was learned:
+  - Even when source assets are imperfect, service-level normalization for obvious placeholder tokens prevents operator UI noise without changing node identity or relation structure.
+  - Current local environment cannot reliably connect to Mongo (`ECONNRESET` to localhost:27017), so online data quantification is not available in this session.
+- Verification:
+  - `node --check src/services/lexiconGraphService.js` -> pass.
+  - `node --check src/routes/pipeline.js` -> pass.
+  - `npx tsc --noEmit` (in `duoxx/`) -> pass.
+
+## 2026-04-14 (Knowledge absorb breadcrumb back button removal + syntax recovery)
+- What changed:
+  - Repaired `duoxx/app/knowledge-absorb.tsx` after a JSX/string corruption incident that broke TypeScript parsing.
+  - Removed the “返回上一层” button from breadcrumb area; users now navigate only by tapping breadcrumb nodes.
+  - Kept breadcrumb visibility rule as `navigationStack.length >= 2`, so a single-node path is hidden and multi-level paths remain clickable.
+  - Restored learned-progress wiring in this screen (`knowledgeAbsorbProgress` keys, learned count in header, exhausted-state next button).
+  - Added back missing `quickActionDisabled` style and rewrote file without BOM.
+- What was learned:
+  - Large scripted line removals in JSX are high risk; restoring from a clean snapshot and then reapplying explicit deltas is safer than patching broken fragments.
+  - Encoding-safe edits must stay in patch-based workflow to avoid accidental mojibake or unterminated string damage.
+- Verification:
+  - `npx tsc --noEmit` (in `duoxx/`) -> pass.
+  - `npm run lint -- app/knowledge-absorb.tsx` (in `duoxx/`) -> pass.
