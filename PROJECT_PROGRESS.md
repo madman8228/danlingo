@@ -1653,3 +1653,28 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
 - Verification:
   - `npx tsc --noEmit` (duoxx) -> pass
   - `npm run lint -- app/knowledge-absorb.tsx` (duoxx) -> pass
+
+## 2026-04-14 - Commit guardrails (encoding + temp files)
+- Current status:
+  - Added staged commit guard script: `duoxx/scripts/guard-staged-files.js`.
+  - Added versioned pre-commit hook: `duoxx/.githooks/pre-commit`.
+  - Added npm scripts: `guard:staged`, `hooks:install`.
+  - Added temp/debug ignore patterns in `duoxx/.gitignore`.
+  - Added operator doc: `duoxx/docs/COMMIT_GUARD.md`.
+  - Local repo hook path configured in `duoxx`: `.githooks`.
+- Verification:
+  - `npm run guard:staged` (duoxx) -> pass
+  - Guard negative test with staged temp file -> blocked as expected
+  - `git config --get core.hooksPath` (duoxx) -> `.githooks`
+
+## 2026-04-14 - Root repo commit guardrails enabled
+- Current status:
+  - Added root staged guard script: `scripts/guard-staged-files.js`.
+  - Added root pre-commit hook: `.githooks/pre-commit`.
+  - Added root `.gitignore` temp/debug patterns.
+  - Added root guide: `COMMIT_GUARD.md`.
+  - Root `core.hooksPath` now points to `.githooks`.
+- Verification:
+  - `node scripts/guard-staged-files.js` (root) -> pass
+  - Force-staged temp file negative test -> blocked as expected
+  - `git config --local --get core.hooksPath` (root) -> `.githooks`

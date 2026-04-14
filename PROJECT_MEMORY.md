@@ -4888,3 +4888,36 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
 - Verification:
   - `npx tsc --noEmit` (in `duoxx/`) -> pass.
   - `npm run lint -- app/knowledge-absorb.tsx` (in `duoxx/`) -> pass.
+
+## 2026-04-14 (Commit pollution guardrails enabled in duoxx)
+- What changed:
+  - Added `duoxx/scripts/guard-staged-files.js` to block staged temp files, UTF-8 BOM, mojibake markers, and replacement char `U+FFFD`.
+  - Added versioned git hook at `duoxx/.githooks/pre-commit` to enforce the staged-file guard on every commit.
+  - Updated `duoxx/package.json` scripts:
+    - `guard:staged`
+    - `hooks:install`
+  - Updated `duoxx/.gitignore` with temp/debug artifact patterns.
+  - Added usage doc `duoxx/docs/COMMIT_GUARD.md`.
+  - Installed local hook path with `git config core.hooksPath .githooks` in `duoxx`.
+- What was learned:
+  - Guard scripts can self-trigger when detection markers are embedded literally in the guard source; allowlisting the guard file for marker-literal check avoids deadlock while preserving BOM/U+FFFD checks.
+  - The fastest way to reduce encoding regressions is commit-time gatekeeping, not post-merge cleanup.
+- Verification:
+  - `npm run guard:staged` (duoxx) -> pass on staged guard files.
+  - Negative test: staged `tmp-guard-test.txt` was blocked as expected.
+  - `git config --get core.hooksPath` (duoxx) -> `.githooks`.
+
+## 2026-04-14 (Commit pollution guardrails enabled in root repo)
+- What changed:
+  - Added root staged guard script: `scripts/guard-staged-files.js`.
+  - Added root pre-commit hook: `.githooks/pre-commit`.
+  - Added root ignore patterns in `.gitignore` for temp/debug artifacts.
+  - Added root usage doc: `COMMIT_GUARD.md`.
+  - Configured root git hook path to `.githooks`.
+- What was learned:
+  - Root-level protection is needed in addition to submodule protection, otherwise markdown/memory/doc edits at monorepo root can still bypass guardrails.
+  - Negative test must use `git add -f` for ignored temp files, otherwise the guard cannot validate the blocked-file path.
+- Verification:
+  - `node scripts/guard-staged-files.js` (root) -> pass with no staged files.
+  - Negative test: force-staged `tmp-root-guard-test.txt` was blocked as expected.
+  - `git config --local --get core.hooksPath` (root) -> `.githooks`.

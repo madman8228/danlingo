@@ -1,0 +1,10 @@
+# Root temp / debug artifacts (must not be committed)
+tmp-head-*
+tmp-*
+.tmp-*
+*.tmp
+*.bak
+*.orig
+*.swp
+*.swo
+

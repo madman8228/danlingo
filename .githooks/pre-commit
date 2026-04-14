@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+node scripts/guard-staged-files.js
+status=$?
+if [ $status -ne 0 ]; then
+  echo "[guard] pre-commit rejected."
+  exit $status
+fi
+
+exit 0
+
