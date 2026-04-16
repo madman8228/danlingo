@@ -1,3 +1,70 @@
+## 2026-04-15 - Hide relation candidate panel when no pending items
+- Current status:
+  - Updated [LexicalAssetImportPanel.tsx](/d:/06-project/expo_duo/duoxx/components/admin/LexicalAssetImportPanel.tsx) to show `Relation Candidate Review` only when there are pending candidates.
+  - When `pendingReview=0` and candidate list is empty, the panel is not rendered on page load/refresh.
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm run lint -- components/admin/LexicalAssetImportPanel.tsx` passed.
+- Blocked / not yet done:
+  - None for this behavior change.
+- Next concrete work item:
+  - If needed, add an explicit "Show Batch Details" toggle for low-frequency diagnostics instead of auto-display.
+
+## 2026-04-15 - Import panel template actions moved to secondary tier
+- Current status:
+  - Updated [LexicalAssetImportPanel.tsx](/d:/06-project/expo_duo/duoxx/components/admin/LexicalAssetImportPanel.tsx) to demote template actions from the primary action row.
+  - Primary row now only keeps core workflow actions (choose file / create batch / publish / clear).
+  - Template downloads are now in a secondary utility row (`Templates (Optional)`) with lighter link-style affordance.
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm run lint -- components/admin/LexicalAssetImportPanel.tsx src/storage/lexicalAssetImportSessionStorage.ts` passed.
+- Blocked / not yet done:
+  - No functional behavior changes to import pipeline; this is hierarchy/interaction emphasis only.
+- Next concrete work item:
+  - If needed, add a collapsible "More tools" wrapper so optional utilities can be hidden by default.
+
+## 2026-04-15 - Import panel stale warning/session persistence fix
+- Current status:
+  - Updated import session storage version to `v2` in [lexicalAssetImportSessionStorage.ts](/d:/06-project/expo_duo/duoxx/src/storage/lexicalAssetImportSessionStorage.ts) to drop stale cached parse state.
+  - Added `batchId` into persisted import session so refresh can restore current batch context.
+  - Updated [LexicalAssetImportPanel.tsx](/d:/06-project/expo_duo/duoxx/components/admin/LexicalAssetImportPanel.tsx):
+    - restore `batchId` on hydration and auto-refresh batch report/candidates,
+    - after successful import batch creation, clear in-memory parser review/file fields so old parse warnings are not repeatedly shown,
+    - persist `review: null` once `batchId` exists to keep UI focused on batch review.
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm run lint -- components/admin/LexicalAssetImportPanel.tsx src/storage/lexicalAssetImportSessionStorage.ts` passed.
+- Blocked / not yet done:
+  - Import flow is still manual for save/publish actions.
+- Next concrete work item:
+  - Add optional one-click "upload -> create batch -> refresh review" action (still stop before publish).
+
+## 2026-04-15 - Remove 1A local asset-build path
+- Current status:
+  - Removed 1A local-processing feature artifacts from repo:
+    - deleted `scripts/build-knowledge-dag-assets.js`
+    - deleted `.codex/skills/knowledge-dag-asset-builder/`
+    - deleted generated output folder `asserts/knowledge-dag/`
+  - Active workflow is now simplified to direct admin upload/import/review/publish in `/admin/pipeline -> Review Hub -> Import`.
+- Blocked / not yet done:
+  - None for this removal.
+- Next concrete work item:
+  - If needed, add in-page one-click auto-run (upload -> create batch -> refresh report) without reintroducing local file-build step.
+
+## 2026-04-15 - Lexical markdown parser plural-header fix
+- Current status:
+  - Fixed parser routing for structured markdown assets in [lexicalSingleFileImport.ts](/d:/06-project/expo_duo/duoxx/src/services/lexicalSingleFileImport.ts:1178).
+  - Structured detector now accepts plural and explicit headers used by uploaded files:
+    - `collocations`, `phrases`, `sentencePatterns`, `idioms`, `spokenExpressions` (plus singular forms).
+  - This prevents files from falling back to word-parser mode that generates mass `ORPHAN_FIELD` warnings (`Field appears outside a word block`).
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm test -- src/services/__tests__/assetParseDiagnostics.test.ts --runInBand` passed.
+- Blocked / not yet done:
+  - Import tab still requires manual `Save Assets` and `Publish`.
+- Next concrete work item:
+  - Add one-click import flow that automatically creates batch and refreshes report/candidates after upload.
+
 ## 2026-04-14 - Knowledge absorb breadcrumb depth rule finalized
 - Current status:
   - Breadcrumb display now uses explicit rule `navigationStack.length >= 2`.
@@ -1678,3 +1745,66 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
   - `node scripts/guard-staged-files.js` (root) -> pass
   - Force-staged temp file negative test -> blocked as expected
   - `git config --local --get core.hooksPath` (root) -> `.githooks`
+
+## 2026-04-15 - Operator Review Hub tab header redesign
+- Current status:
+  - Updated `duoxx/components/admin/OperatorWorkbench.tsx` tab switcher into a segmented tab rail.
+  - `Import / Knowledge Review / Task Review` now uses stronger active state contrast and a visible active indicator.
+  - Added accessibility semantics for tab selection (`accessibilityRole="tab"`, `accessibilityState.selected`).
+- Verification:
+  - `npm run lint -- components/admin/OperatorWorkbench.tsx` (duoxx) -> pass
+  - `npx tsc --noEmit` (duoxx) -> pass
+
+## 2026-04-15 - Operator tab style flattened (remove nested border look)
+- Current status:
+  - Removed the outer bordered capsule + inner bordered pills from `OperatorWorkbench` tabs.
+  - Tabs now render as a flat row with a bottom divider and active underline indicator only.
+  - Active state keeps light tint background for affordance but no ring-in-ring border structure.
+- Verification:
+  - `npm run lint -- components/admin/OperatorWorkbench.tsx` (duoxx) -> pass
+  - `npx tsc --noEmit` (duoxx) -> pass
+
+## 2026-04-16 - Lexicon import copy updated to reflect multi-file support
+- Current status:
+  - Updated `duoxx/src/config/adminLexicalSingleFile.ts` import description:
+    - no longer says “single-file only”
+    - now explicitly states support for single and multi-file batch upload
+    - clarifies mixed `Markdown/CSV/TXT` upload is supported
+  - Updated empty state prompt from “解析一个资产文件” to “解析至少一个资产文件”.
+- Verification:
+  - `npx tsc --noEmit` (duoxx) -> pass
+
+## 2026-04-16 - Pipeline 极简重设计（3 步流 + 一键发布）
+- Current status:
+  - Frontend import panel now uses one primary action:
+    - `发布到学习库` (replaces visible two-step `导入图谱批次 + 发布快照`)
+  - Frontend UI no longer exposes batch/snapshot terminology in primary flow copy.
+  - Review blocking keeps two gates:
+    - 解析阻断（errors/warnings）
+    - 审查阻断（pending relation candidates）
+  - Added new unified backend endpoint:
+    - `POST /api/pipeline/lexicon/release`
+    - internal orchestration: import (if needed) -> gate check -> publish.
+  - Added service-level `releaseToLearning` response contract:
+    - `status`, `blockedReason`, `pendingReviewCount`, `publishedAt`, `currentPublishId`.
+  - Publish consistency updated to current-only retention:
+    - stage new snapshot -> switch active pointer -> delete old snapshots.
+  - Legacy endpoints (`/lexicon/import-batches`, `/lexicon/publish`) remain for compatibility and are no longer required by the updated UI path.
+- Verification:
+  - `node --check src/routes/pipeline.js` (duoxx_server_link) -> pass
+  - `node --check src/services/lexiconGraphService.js` (duoxx_server_link) -> pass
+  - `node --check src/routes/lexiconGraphFlow.test.js` (duoxx_server_link) -> pass
+  - `node --check src/services/__tests__/lexiconGraphService.integration.test.js` (duoxx_server_link) -> pass
+  - `npx tsc --noEmit` (duoxx) -> pass
+- Notes:
+  - Backend Jest not runnable in this session environment because `cross-env/jest` binaries are unavailable from local `node_modules`.
+
+## 2026-04-16 - Lexicon 导入页去除非必要状态行
+- Current status:
+  - Removed the top section status row in `duoxx/components/admin/LexicalAssetImportPanel.tsx`:
+    - `文件: ... | 类型: ... | 状态: ...`
+  - Existing core flow remains:
+    - 选择资产文件 -> 发布到学习库
+    - 解析阻断与关系候选审查阻断逻辑保持不变
+- Verification:
+  - `npx tsc --noEmit` (duoxx) -> pass

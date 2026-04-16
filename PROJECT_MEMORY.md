@@ -1,3 +1,78 @@
+## 2026-04-15 (Suppress relation-candidate panel when no pending review)
+- What changed:
+  - Adjusted [LexicalAssetImportPanel.tsx](/d:/06-project/expo_duo/duoxx/components/admin/LexicalAssetImportPanel.tsx) rendering logic:
+    - `Relation Candidate Review` section now requires actual pending candidates (`pendingReview > 0` or non-empty candidate list).
+    - Removed default auto-display of this diagnostics-heavy panel when batch has no pending review items.
+- What was learned:
+  - Persisting `batchId` is useful for continuity, but showing full candidate diagnostics by default increases cognitive noise when there is nothing to review.
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm run lint -- components/admin/LexicalAssetImportPanel.tsx` passed.
+- Next steps / open questions:
+  - Optional future UX: keep an explicit "Show batch diagnostics" toggle for expert users.
+
+## 2026-04-15 (Import panel UI hierarchy cleanup for template actions)
+- What changed:
+  - Refined [LexicalAssetImportPanel.tsx](/d:/06-project/expo_duo/duoxx/components/admin/LexicalAssetImportPanel.tsx) interaction hierarchy:
+    - removed template download buttons from the primary action row,
+    - moved them into a secondary utility area labeled `Templates (Optional)`,
+    - applied lighter styling so templates no longer compete with core import actions.
+- What was learned:
+  - Keeping optional tools at the same visual level as primary workflow actions increases operator scanning cost and creates action ambiguity.
+  - Demoting optional actions to a clear secondary tier aligns with one-screen/one-goal cognitive-load policy.
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm run lint -- components/admin/LexicalAssetImportPanel.tsx src/storage/lexicalAssetImportSessionStorage.ts` passed.
+- Next steps / open questions:
+  - If optional tools continue to be noisy, move them under an explicit expandable "More tools" toggle.
+
+## 2026-04-15 (Import panel stale parse warning cleanup + batch restore)
+- What changed:
+  - Updated import session storage key to `@duoxx:lexical_asset_import_session_v2` in [lexicalAssetImportSessionStorage.ts](/d:/06-project/expo_duo/duoxx/src/storage/lexicalAssetImportSessionStorage.ts).
+  - Added persisted `batchId` to import session model.
+  - Updated [LexicalAssetImportPanel.tsx](/d:/06-project/expo_duo/duoxx/components/admin/LexicalAssetImportPanel.tsx):
+    - hydrate `batchId` and auto-run `refreshBatchState(batchId)` after page refresh,
+    - on successful `createImportBatch`, clear `review/fileName/fileType/bundleReviews` to prevent old parser warnings from staying on screen,
+    - persist `review: null` when batch is already created.
+- What was learned:
+  - The repeated "Re-upload" button and persistent warning list came from intentional session persistence of `review` plus `fileName`.
+  - For operator flow, once batch is created, keeping parser issues visible is confusing; batch review should become the primary context.
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm run lint -- components/admin/LexicalAssetImportPanel.tsx src/storage/lexicalAssetImportSessionStorage.ts` passed.
+- Next steps / open questions:
+  - Optionally add one-click import action (upload and auto-create batch) to further reduce manual steps.
+
+## 2026-04-15 (Remove 1A local asset build capability)
+- What changed:
+  - Removed the optional 1A local conversion pipeline as requested:
+    - deleted `scripts/build-knowledge-dag-assets.js`
+    - deleted `.codex/skills/knowledge-dag-asset-builder/`
+    - deleted generated `asserts/knowledge-dag/`
+  - Kept the primary backend-admin flow unchanged: upload raw markdown directly in pipeline import panel.
+- What was learned:
+  - Local pre-build packaging is useful for governance, but not required for current operator workflow.
+  - Removing optional layers reduces process branching and lowers operator cognitive load.
+- Verification:
+  - Confirmed 1A artifacts are absent from workspace after deletion.
+- Next steps / open questions:
+  - Consider an in-UI one-click import automation if you still want fewer manual steps, but keep it inside the backend workflow (no local asset build stage).
+
+## 2026-04-15 (Lexical import parser routing fix for plural structured headers)
+- What changed:
+  - Updated [lexicalSingleFileImport.ts](/d:/06-project/expo_duo/duoxx/src/services/lexicalSingleFileImport.ts:1178) markdown structured-asset detector.
+  - Added plural header recognition for structured assets:
+    - `collocations`, `phrases`, `sentencePatterns`, `idioms`, `spokenExpressions` (and singular variants).
+  - This prevents structured markdown files from being misrouted to word-parser mode, which caused large `ORPHAN_FIELD` warning counts.
+- What was learned:
+  - The upload issue was parser mode selection mismatch, not missing data in source markdown.
+  - When structured header is not matched, every `## ...` line is treated as plain key-value outside word block and floods warnings.
+- Verification:
+  - `duoxx`: `npx tsc --noEmit` passed.
+  - `duoxx`: `npm test -- src/services/__tests__/assetParseDiagnostics.test.ts --runInBand` passed.
+- Next steps / open questions:
+  - Add an optional auto-run import path in Review Hub import tab (upload -> create batch -> refresh report), while still stopping before publish for manual review.
+
 ## 2026-04-14 (Knowledge absorb breadcrumb rule clarified as explicit 2+ depth)
 - What changed:
   - Refined `duoxx/app/knowledge-absorb.tsx` breadcrumb visibility logic with explicit boolean:
@@ -4921,3 +4996,89 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
   - `node scripts/guard-staged-files.js` (root) -> pass with no staged files.
   - Negative test: force-staged `tmp-root-guard-test.txt` was blocked as expected.
   - `git config --local --get core.hooksPath` (root) -> `.githooks`.
+
+## 2026-04-15 (Operator Review Hub tabs visually clarified)
+- What changed:
+  - Redesigned top-level review tabs in `duoxx/components/admin/OperatorWorkbench.tsx`.
+  - Introduced a segmented tab rail style for `Import / Knowledge Review / Task Review`.
+  - Added explicit active affordance (contrast + indicator) and tab accessibility semantics.
+- What was learned:
+  - Operators identify mode switches faster when tabs share one container and one selected marker, compared with isolated outlined chips.
+  - Explicit selected-state styling reduces context-switch mistakes in multi-workbench admin surfaces.
+- Next steps / open questions:
+  - Validate on narrower mobile widths whether tab labels should shorten to `Import / Knowledge / Tasks`.
+- Verification:
+  - `npm run lint -- components/admin/OperatorWorkbench.tsx` (duoxx) -> pass.
+  - `npx tsc --noEmit` (duoxx) -> pass.
+
+## 2026-04-15 (Operator tabs flattened per no ring-in-ring rule)
+- What changed:
+  - Updated `duoxx/components/admin/OperatorWorkbench.tsx` tab visuals to remove nested border containers.
+  - Replaced border-heavy segmented shell with a flat tab row: bottom divider + active underline.
+  - Kept selected-state clarity via light tint background, without inner/outer border stacking.
+- What was learned:
+  - For this admin surface, underline-driven tabs communicate hierarchy clearly with less visual noise than nested outlined controls.
+- Next steps / open questions:
+  - If needed, reduce active tint fill further to pure text+underline mode for an even lighter look.
+- Verification:
+  - `npm run lint -- components/admin/OperatorWorkbench.tsx` (duoxx) -> pass.
+  - `npx tsc --noEmit` (duoxx) -> pass.
+
+## 2026-04-16 (Lexicon import copy aligned with actual multi-file behavior)
+- What changed:
+  - Updated `duoxx/src/config/adminLexicalSingleFile.ts` copy to match implemented behavior:
+    - Description now states single-file and multi-file batch import are both supported.
+    - Clarified accepted mixed file formats: `Markdown/CSV/TXT`.
+    - Empty-state prompt changed from “upload one file” to “upload at least one file”.
+- What was learned:
+  - Operator confusion came from stale copy, not upload capability. The upload flow already supports `multiple: true` and backend `bundleReviews`.
+  - Keeping UI copy synchronized with actual contract avoids false debugging loops in ops workflows.
+- Verification:
+  - `npx tsc --noEmit` (in `duoxx/`) -> pass.
+
+## 2026-04-16 (Pipeline 极简 3 步流 + 一键发布落地)
+- What changed:
+  - Frontend `duoxx/components/admin/LexicalAssetImportPanel.tsx`:
+    - Replaced dual actions (`导入图谱批次` + `发布快照`) with a single primary action `发布到学习库`.
+    - Kept review blocking UI but changed user-facing language to business terms (no batch/snapshot terminology).
+    - Added release blocking messages:
+      - `未完成审查，暂不可发布。`
+      - `质量门禁未通过，暂不可发布。`
+    - Continued using candidate review flow (approve/reject/merge) before publish.
+  - Frontend API/storage:
+    - Added `releaseToLearning` in `duoxx/src/services/lexiconApi.ts`.
+    - Added local fallback orchestration `releaseToLearning` in `duoxx/src/storage/lexiconGraphStorage.ts`.
+    - Local publish now keeps only one current snapshot record.
+  - Backend orchestration:
+    - Added `POST /api/pipeline/lexicon/release` in `duoxx_server_link/src/routes/pipeline.js`.
+    - Added `releaseToLearning` in `duoxx_server_link/src/services/lexiconGraphService.js`:
+      - internal flow: import (if needed) -> pending review gate -> strict quality gate publish.
+      - returns `status / blockedReason / pendingReviewCount / publishedAt / currentPublishId`.
+    - Updated publish behavior to stage new snapshot, switch active pointer, and clean old snapshots (current-only retention).
+  - Tests:
+    - Added release endpoint smoke coverage in `duoxx_server_link/src/routes/lexiconGraphFlow.test.js`.
+    - Added service integration coverage for blocked/published release path and single-current snapshot retention in `duoxx_server_link/src/services/__tests__/lexiconGraphService.integration.test.js`.
+- What was learned:
+  - Exposing only one publish action reduces operator branching without weakening strict quality gates.
+  - Keeping old endpoints as compatibility while routing UI to a single orchestration endpoint gives a clean migration path.
+  - `LexiconSnapshot` cleanup after pointer switch is necessary to satisfy “only current version” policy, not only `isActive=false`.
+- Next steps / open questions:
+  - Add route-level contract tests for release payload variants (`batchId` only vs `review/bundleReviews`) when server test env is fully available.
+  - Evaluate whether old `/lexicon/import-batches` and `/lexicon/publish` should be internally flagged/deprecated in admin docs.
+- Verification:
+  - `node --check src/routes/pipeline.js` (duoxx_server_link) -> pass.
+  - `node --check src/services/lexiconGraphService.js` (duoxx_server_link) -> pass.
+  - `node --check src/routes/lexiconGraphFlow.test.js` (duoxx_server_link) -> pass.
+  - `node --check src/services/__tests__/lexiconGraphService.integration.test.js` (duoxx_server_link) -> pass.
+  - `npx tsc --noEmit` (duoxx) -> pass.
+  - Note: Jest execution in `duoxx_server_link` is currently blocked in this environment because `cross-env/jest` binaries are unavailable from local `node_modules`.
+
+## 2026-04-16 (Lexicon 导入区删除非必要状态行)
+- What changed:
+  - Removed the inline status text row in `duoxx/components/admin/LexicalAssetImportPanel.tsx`:
+    - `文件: ... | 类型: ... | 状态: ...`
+  - Kept core actions and review/publish blocking UI unchanged.
+- What was learned:
+  - This status row duplicated context already visible from upload/review state and added visual noise; removing it keeps the header area cleaner.
+- Verification:
+  - `npx tsc --noEmit` (duoxx) -> pass.
