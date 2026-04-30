@@ -5082,3 +5082,70 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
   - This status row duplicated context already visible from upload/review state and added visual noise; removing it keeps the header area cleaner.
 - Verification:
   - `npx tsc --noEmit` (duoxx) -> pass.
+
+## 2026-04-16 (Operator Review Hub 删除 Knowledge Review)
+- What changed:
+  - Removed `Knowledge Review` tab from `duoxx/components/admin/OperatorWorkbench.tsx`.
+  - Removed corresponding knowledge review UI block (queue/list/editor/approve-reject actions).
+  - Removed related local state and reload data fetch for knowledge nodes, so workbench now focuses on:
+    - `Import`
+    - `Task Review`
+- What was learned:
+  - `Knowledge Review` as a parallel top-level lane increases operator mental branching in current phase where lexical import + task review are the dominant paths.
+  - Keeping backend capabilities while removing the UI entry is a low-risk simplification path.
+- Verification:
+  - `npx tsc --noEmit` (duoxx) -> pass.
+
+## 2026-04-16 (Operator Review Hub 删除 Task Review 并重构为 Import-only)
+- What changed:
+  - Removed `Task Review` feature from `duoxx/components/admin/OperatorWorkbench.tsx` at code level:
+    - removed tab entry and entire task review UI panel;
+    - removed task/candidate review state, data fetching, and action handlers;
+    - removed related selector/tab style and helper UI.
+  - Reworked page layout to import-first:
+    - removed top tab rail;
+    - header now uses a compact `Import Workspace` title + metrics + refresh action;
+    - body renders import panel directly as single dominant workflow.
+  - `reload` now only triggers upstream import-publish refresh callback instead of loading removed task/knowledge queues.
+- What was learned:
+  - After removing non-core review lanes, keeping a single entry workflow significantly reduces operator context switching.
+  - Import-only layout benefits from deleting stale state/fetch code, not just hiding panels.
+- Verification:
+  - `npx tsc --noEmit` (duoxx) -> pass.
+  - `npm run lint -- components/admin/OperatorWorkbench.tsx` (duoxx) -> pass.
+
+## 2026-04-16 (Pipeline refresh loop + 429 popup storm fix)
+- What changed:
+  - Updated `duoxx/components/admin/PipelineDashboard.tsx`:
+    - Refactored `loadCourses` to `useCallback` and added in-flight dedupe (`courseLoadInFlightRef`) to prevent concurrent duplicate requests.
+    - Added rate-limit error detection (`isTooManyRequestsApiError`) and 5s throttle for alert display to avoid repeated modal storms.
+    - Replaced inline `onImportPublished={() => { void loadCourses(); }}` with stable callback `handleOperatorImportPublished` to stop child effect loops.
+  - Updated `duoxx/components/admin/OperatorWorkbench.tsx`:
+    - `onImportPublished` prop now supports async callback (`() => void | Promise<void>`).
+    - Awaited publish callback after successful publish to keep refresh timing deterministic.
+- What was learned:
+  - Passing unstable inline callbacks into child `useEffect` dependency chains can create render-triggered request loops and quickly hit backend 429 limits.
+  - Request dedupe plus rate-limit alert throttling is needed in admin pages that expose manual refresh actions.
+- Next steps / open questions:
+  - Consider replacing blocking web `alert` with non-blocking toast for all admin error notifications to avoid modal interruption under transient backend pressure.
+- Verification:
+  - `npx tsc --noEmit` (duoxx) -> pass.
+  - `npm run lint -- components/admin/PipelineDashboard.tsx components/admin/OperatorWorkbench.tsx components/admin/LexicalAssetImportPanel.tsx` (duoxx) -> pass (1 existing warning in `LexicalAssetImportPanel.tsx`).
+
+## 2026-04-30 (提交前同步知识库与导入工作台状态)
+- What changed:
+  - Prepared commit scope across root content updates and nested `duoxx` admin changes.
+  - Confirmed `knowledge-DAG/word_knowledge.md` and `knowledge-DAG/sentencePatterns_knowledge.md` were expanded from sparse seed records into structured lexicon and sentence-pattern content, including apple / ability / abandon-related entries and usage examples.
+  - Confirmed `duoxx/components/admin/OperatorWorkbench.tsx` is now import-only and `duoxx/components/admin/PipelineDashboard.tsx` now dedupes course refresh requests and throttles 429 alerts.
+  - Left generated backup artifacts `asserts/project_20260416_190551/` and `asserts/project_20260416_190551.tar.gz` outside commit scope.
+- What was learned:
+  - Because `duoxx` is tracked as a gitlink, frontend changes must be committed inside `duoxx` first and then recorded by the root repo.
+  - Bulk markdown knowledge updates benefit from a `git diff --check` pass before commit to catch whitespace hygiene issues early.
+- Next steps / open questions:
+  - Decide whether the generated `asserts/project_20260416_190551*` backup artifacts should be deleted locally or added to `.gitignore`.
+- Verification:
+  - Targeted mojibake scan on touched knowledge/admin files -> no new hits; older history notes in `PROJECT_MEMORY.md` / `PROJECT_PROGRESS.md` still contain pre-existing mojibake.
+  - `git -C duoxx diff --check` -> pass.
+  - `git diff --check` -> pass after whitespace cleanup in `knowledge-DAG/word_knowledge.md`.
+  - `npx tsc --noEmit` (duoxx) -> pass.
+  - `npm run lint -- components/admin/OperatorWorkbench.tsx components/admin/PipelineDashboard.tsx components/admin/LexicalAssetImportPanel.tsx` (duoxx) -> pass with 1 pre-existing warning in `LexicalAssetImportPanel.tsx`.

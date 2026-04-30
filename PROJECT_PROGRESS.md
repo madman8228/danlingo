@@ -1808,3 +1808,46 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
     - 解析阻断与关系候选审查阻断逻辑保持不变
 - Verification:
   - `npx tsc --noEmit` (duoxx) -> pass
+
+## 2026-04-16 - Operator Review Hub 移除 Knowledge Review
+- Current status:
+  - Removed `Knowledge Review` tab and its full panel from `duoxx/components/admin/OperatorWorkbench.tsx`.
+  - Workbench tab set simplified to:
+    - `Import`
+    - `Task Review`
+  - Removed knowledge-node queue request from `reload`, reducing unnecessary data loading in this screen.
+- Verification:
+  - `npx tsc --noEmit` (duoxx) -> pass
+
+## 2026-04-16 - Operator Review Hub 移除 Task Review + Import-only UI
+- Current status:
+  - Removed `Task Review` tab and full task review section from `duoxx/components/admin/OperatorWorkbench.tsx`.
+  - Removed task/candidate review queue loading and related handlers from this screen.
+  - Simplified page structure to single-workflow Import workspace:
+    - compact header (`Import Workspace` + metrics + refresh)
+    - direct rendering of lexical import panel
+    - no tab rail and no secondary review lanes.
+- Verification:
+  - `npx tsc --noEmit` (duoxx) -> pass
+  - `npm run lint -- components/admin/OperatorWorkbench.tsx` (duoxx) -> pass
+
+## 2026-04-16 - Pipeline refresh loop and 429 alert storm fixed
+- Current status:
+  - Fixed repeated refresh loop in `duoxx/components/admin/PipelineDashboard.tsx` by making `loadCourses` stable (`useCallback`) and wiring `OperatorWorkbench` with a stable `onImportPublished` callback.
+  - Added in-flight request dedupe for course loading (`courseLoadInFlightRef`) so concurrent refresh triggers reuse the same request.
+  - Added rate-limit detection (`HTTP_429` / "too many requests") with 5-second alert throttle to stop modal spam on web.
+  - Updated `duoxx/components/admin/OperatorWorkbench.tsx` to support async `onImportPublished` and await it after publish success.
+- Verification:
+  - `npx tsc --noEmit` (duoxx) -> pass
+  - `npm run lint -- components/admin/PipelineDashboard.tsx components/admin/OperatorWorkbench.tsx components/admin/LexicalAssetImportPanel.tsx` (duoxx) -> pass (with 1 pre-existing warning in `LexicalAssetImportPanel.tsx`)
+
+## 2026-04-30 - 提交前同步当前工作区状态
+- Current status:
+  - `duoxx` admin import area has been simplified to a single import workspace, and course refresh no longer re-enters request loops or spams 429 alerts.
+  - `knowledge-DAG/word_knowledge.md` and `knowledge-DAG/sentencePatterns_knowledge.md` now contain expanded structured entries instead of the earlier sparse seed records.
+  - Generated backup artifacts under `asserts/project_20260416_190551*` remain untracked and are not included in the commit.
+- Verification:
+  - `git -C duoxx diff --check` -> pass
+  - `git diff --check` -> pass after whitespace cleanup in `knowledge-DAG/word_knowledge.md`
+  - `npx tsc --noEmit` (duoxx) -> pass
+  - `npm run lint -- components/admin/OperatorWorkbench.tsx components/admin/PipelineDashboard.tsx components/admin/LexicalAssetImportPanel.tsx` (duoxx) -> pass (1 pre-existing warning in `LexicalAssetImportPanel.tsx`)
