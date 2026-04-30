@@ -1,0 +1,102 @@
+A开头单词批处理说明
+============================================================
+
+待处理单词数: 87
+
+单词列表:
+ 1. a
+ 2. able
+ 3. about
+ 4. above
+ 5. accept
+ 6. accident
+ 7. ache
+ 8. achieve
+ 9. across
+10. act
+11. action
+12. active
+13. activity
+14. add
+15. address
+16. advantage
+17. advice
+18. advise
+19. afford
+20. afraid
+21. after
+22. afternoon
+23. again
+24. against
+25. age
+26. ago
+27. agree
+28. agreement
+29. air
+30. airport
+31. alive
+32. all
+33. allow
+34. almost
+35. alone
+36. along
+37. already
+38. also
+39. although
+40. always
+41. amazing
+42. America
+43. American
+44. among
+45. amount
+46. ancient
+47. and
+48. angry
+49. animal
+50. another
+51. answer
+52. ant
+53. any
+54. anybody
+55. anyone
+56. anything
+57. anyway
+58. anywhere
+59. appear
+60. apple
+61. April
+62. area
+63. arm
+64. army
+65. around
+66. arrive
+67. art
+68. article
+69. artist
+70. as
+71. Asia
+72. Asian
+73. ask
+74. asleep
+75. at
+76. Atlantic
+77. attention
+78. August
+79. aunt
+80. Australia
+81. Australian
+82. autumn
+83. available
+84. avoid
+85. awake
+86. award
+87. away
+
+
+处理方式说明:
+由于工作流需要手动执行，请按以下步骤处理:
+1. 每次选择5-10个单词
+2. 使用test_run工具运行
+3. 将结果保存到assets/a目录
+
+4. 重复直到所有单词处理完成
