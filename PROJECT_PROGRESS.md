@@ -1851,3 +1851,14 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
   - `git diff --check` -> pass after whitespace cleanup in `knowledge-DAG/word_knowledge.md`
   - `npx tsc --noEmit` (duoxx) -> pass
   - `npm run lint -- components/admin/OperatorWorkbench.tsx components/admin/PipelineDashboard.tsx components/admin/LexicalAssetImportPanel.tsx` (duoxx) -> pass (1 pre-existing warning in `LexicalAssetImportPanel.tsx`)
+
+## 2026-04-30 - 前后端未提交代码巡检
+- Current status:
+  - Root repo is clean and only ahead of remote by 3 local commits.
+  - Frontend repo `duoxx` is clean and only ahead of remote by 2 local commits.
+  - Backend entry `duoxx_server_link` has been identified as a symbolic link to the WSL path `\\wsl.localhost\Ubuntu-22.04\home\rookie\project\duoxx_server`.
+  - Backend git status could not be verified in this session because WSL/UNC access to that target timed out.
+- Verification:
+  - `git status --short --branch` -> clean
+  - `git -C duoxx status --short --branch` -> clean
+  - backend `wsl` / UNC git probes -> timeout

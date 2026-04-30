@@ -5149,3 +5149,24 @@ px.cmd tsc --noEmit -p tsconfig.json (cwd: duoxx) -> pass.
   - `git diff --check` -> pass after whitespace cleanup in `knowledge-DAG/word_knowledge.md`.
   - `npx tsc --noEmit` (duoxx) -> pass.
   - `npm run lint -- components/admin/OperatorWorkbench.tsx components/admin/PipelineDashboard.tsx components/admin/LexicalAssetImportPanel.tsx` (duoxx) -> pass with 1 pre-existing warning in `LexicalAssetImportPanel.tsx`.
+
+## 2026-04-30 (前后端未提交代码巡检)
+- What changed:
+  - Checked git cleanliness for the root workspace and nested frontend repo `duoxx`.
+  - Confirmed there were no uncommitted changes in either repo; only local commits ahead of remote remained:
+    - root `main` ahead of `origin/main` by 3 commits
+    - `duoxx` `master` ahead of `origin/master` by 2 commits
+  - Verified `duoxx_server_link` points to backend path `\\wsl.localhost\Ubuntu-22.04\home\rookie\project\duoxx_server`.
+  - Could not complete backend git inspection because both `wsl` and direct UNC-path git commands timed out from this environment.
+- What was learned:
+  - The backend is not a repo inside this workspace; it is an external WSL-linked directory, so backend verification depends on WSL responsiveness, not only local filesystem access.
+  - Repo-status-only tasks still need memory/progress sync, otherwise the root repo becomes dirty again after the check.
+- Next steps / open questions:
+  - If backend confirmation is still needed, rerun the check after WSL becomes responsive or inspect `/home/rookie/project/duoxx_server` directly inside Ubuntu.
+- Verification:
+  - `git status --short --branch` (root) -> clean worktree, `main...origin/main [ahead 3]`
+  - `git -C duoxx status --short --branch` -> clean worktree, `master...origin/master [ahead 2]`
+  - `Get-Item duoxx_server_link | Select-Object FullName,LinkType,Target | Format-List` -> symbolic link confirmed
+  - `wsl -l -v` -> timed out in current environment
+  - `wsl -d Ubuntu-22.04 bash -lc 'pwd'` -> timed out in current environment
+  - `git -C "\\wsl.localhost\Ubuntu-22.04\home\rookie\project\duoxx_server" status --short --branch` -> timed out in current environment
