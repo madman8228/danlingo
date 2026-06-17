@@ -22,6 +22,10 @@ DuoXX is a gamified language learning app built with Expo and React Native. It f
 - Update `PROJECT_PROGRESS.md` after each completed task so the current implementation status stays visible without reading the whole session log.
 
 ## Rule Priority (Mandatory)
+- 编码前先思考(ThinkBefore Coding)明确陈述假设;不确定的地方要提问而不是靠猜;存在歧义时提供多种解释;如果存在更简单的方法，要予以反驳。
+- 简约至上(Simplicity First)只写能解决问题的最少代码;不写投机性功能;不为单次使用的代码做抽象。
+- 外科手术式修改(Surgical Changes)只触碰必须修改的地方;不要顺便“优化”无关的代码、注释或格式;不修复没坏的东西;匹配现有风格。
+
 - If rules conflict, follow this priority:
   1) Constitutions (Admin UI, UX/Cognitive-Load, Product/Data, Development-Phase, Encoding/Text)
   2) Closed-Loop Autopilot Protocol
